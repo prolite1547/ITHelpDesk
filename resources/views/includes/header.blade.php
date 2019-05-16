@@ -54,6 +54,9 @@
                             <a href="{{route('maintenancePage')}}" class="nav__a {{Route::currentRouteName() == 'maintenancePage' ? 'nav__a--active' : ''}}">Maintenance</a>
                         </li>
                     @endif
+                    <li class="nav__li">
+                        <a href="#" class="nav__a">Manual</a>
+                    </li>
                     @if(Auth::user()->role_id === $user_roles['admin'])
                     <li class="nav__li">
                         <a href="{{route('adminPage')}}" class="nav__a {{Route::currentRouteName() == 'adminPage' ? 'nav__a--active' : ''}}">Admin</a>

@@ -34,18 +34,18 @@
                                         @foreach ($sdc as $item)
                                             @if ($item->forward_status >= 2)
                                                 <a class="search__item" href="{{route('sdc.printer',['id' => $item->id])}}" target="_blank">
-                                                        <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->incident->subject}})</div>
+                                                        <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->issue->subject}})</div>
                                                         <span class="search__details">
-                                                            {{$item->ticket->incident->details}}
+                                                            {{$item->ticket->issue->details}}
                                                         </span><br>
                                                     <span class="table__info">DONE</span>
                                                 </a>
                                                
                                             @else
                                                 <a class="search__item" href="{{route('sdc.edit',['sdc' => $item->id])}}">
-                                                        <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->incident->subject}})</div>
+                                                        <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->issue->subject}})</div>
                                                         <span class="search__details">
-                                                            {{$item->ticket->incident->details}}
+                                                            {{$item->ticket->issue->details}}
                                                         </span><br>
                                                         <span class="table__info">PENDING</span>
                                                 </a>
@@ -64,18 +64,18 @@
                                     @foreach ($sdc as $item)
                                         @if ($item->forward_status >= 3)
                                             <a class="search__item" href="{{route('sdc.printer',['id' => $item->id])}}" target="_blank">
-                                                    <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->incident->subject}})</div>
+                                                    <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->issue->subject}})</div>
                                                     <span class="search__details">
-                                                        {{$item->ticket->incident->details}}
+                                                        {{$item->ticket->issue->details}}
                                                     </span><br>
                                                 <span class="table__info">DONE</span>
                                             </a>
                                            
                                         @else
                                             <a class="search__item" href="{{route('sdc.edit',['sdc' => $item->id])}}" >
-                                                    <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->incident->subject}})</div>
+                                                    <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->issue->subject}})</div>
                                                     <span class="search__details">
-                                                        {{$item->ticket->incident->details}}
+                                                        {{$item->ticket->issue->details}}
                                                     </span><br>
                                                     <span class="table__info">PENDING</span>
                                             </a>
@@ -94,18 +94,18 @@
                                  @foreach ($sdc as $item)
                                      @if ($item->forward_status >= 4)
                                          <a class="search__item" href="{{route('sdc.printer',['id' => $item->id])}}" target="_blank">
-                                                 <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->incident->subject}})</div>
+                                                 <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->issue->subject}})</div>
                                                  <span class="search__details">
-                                                     {{$item->ticket->incident->details}}
+                                                     {{$item->ticket->issue->details}}
                                                  </span><br>
                                              <span class="table__info">DONE</span>
                                          </a>
                                         
                                      @else
                                          <a class="search__item" href="{{route('sdc.edit',['sdc' => $item->id])}}">
-                                                 <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->incident->subject}})</div>
+                                                 <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->issue->subject}})</div>
                                                  <span class="search__details">
-                                                     {{$item->ticket->incident->details}}
+                                                     {{$item->ticket->issue->details}}
                                                  </span><br>
                                                  <span class="table__info">PENDING</span>
                                          </a>
@@ -125,9 +125,9 @@
                                @foreach ($sdc as $item)
                                    @if ($item->forward_status >= 5)
                                        <a class="search__item" href="{{route('sdc.printer',['id' => $item->id])}}" target="_blank">
-                                               <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->incident->subject}})</div>
+                                               <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->issue->subject}})</div>
                                                <span class="search__details">
-                                                   {{$item->ticket->incident->details}}
+                                                   {{$item->ticket->issue->details}}
                                                </span><br>
                                             
                                            <span class="table__info">DONE</span>
@@ -135,9 +135,9 @@
                                       
                                    @else
                                        <a class="search__item" href="{{route('sdc.edit',['sdc' => $item->id])}}" >
-                                               <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->incident->subject}})</div>
+                                               <div class="search__label">SDC #{{$item->id}} ({{$item->ticket->issue->subject}})</div>
                                                <span class="search__details">
-                                                   {{$item->ticket->incident->details}}
+                                                   {{$item->ticket->issue->details}}
                                                </span><br>
                                                <span class="table__info">PENDING</span>
                                        </a>

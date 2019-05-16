@@ -87,11 +87,15 @@ class ReportsController extends Controller
         // Reservation::whereBetween('reservation_from', [$from, $to])->get();
 
         if($request->category == "all"){
-            $incidents = Incident::whereYear('created_at', '=', $request->year)
+            $incidents = Incident::whereHas('ticket', function($query){
+                $query->whereNull('deleted_at');
+            })->whereYear('created_at', '=', $request->year)
             ->whereMonth('created_at', '=', $request->month)
             ->get();
         }else{
-            $incidents = Incident::whereYear('created_at', '=', $request->year)
+            $incidents = Incident::whereHas('ticket', function($query){
+                $query->whereNull('deleted_at');
+            })->whereYear('created_at', '=', $request->year)
             ->whereMonth('created_at', '=', $request->month)
             ->where('catA', $request->category)
             ->get();
@@ -130,9 +134,13 @@ class ReportsController extends Controller
 
       
         if($category != "all"){
-            $incidents = Incident::whereBetween('created_at', [$start, $end])->where('catA', $category)->get();
+            $incidents = Incident::whereHas('ticket', function($query){
+                $query->whereNull('deleted_at');
+            })->whereBetween('created_at', [$start, $end])->where('catA', $category)->get();
         }else{
-            $incidents = Incident::whereBetween('created_at', [$start, $end])->get();
+            $incidents = Incident::whereHas('ticket', function($query){
+                $query->whereNull('deleted_at');
+            })->whereBetween('created_at', [$start, $end])->get();
         }
 
         $rowdata ="";
@@ -218,9 +226,13 @@ class ReportsController extends Controller
          $store = $request->store;
        
         if($store == "all"){
-            $incidents = Incident::whereBetween('created_at', [$start, $end])->where('catA', 6)->get();
+            $incidents = Incident::whereHas('ticket', function($query){
+                $query->whereNull('deleted_at');
+            })->whereBetween('created_at', [$start, $end])->where('catA', 6)->get();
         }else{
-            $incidents = Incident::whereHas('ticket.getStore', function ($query) use ($store) {
+            $incidents = Incident::whereHas('ticket', function($query){
+                $query->whereNull('deleted_at');
+            })->whereHas('ticket.getStore', function ($query) use ($store) {
                 $query->where('id', '=',$store); 
             })->whereBetween('created_at', [$start, $end])->where('catA', 6)->get();
         }
@@ -277,8 +289,107 @@ class ReportsController extends Controller
 
 
 public function loadChart(){
+    date_default_timezone_set("Asia/Manila");
+    $currentDate =  date('m/d/Y');
+    $month =  date("m", strtotime($currentDate));
+
+    $downCounts = 0;
+    $downPending = 0;
+    $pendingDays = 0;
+    $temp = 0;
+
+    $incidents = Incident::whereHas('ticket', function($query){
+        $query->whereNull('deleted_at');
+    })->whereMonth('created_at',  $month)->where('catA', 6)->get();
+
+    foreach($incidents as $i){
+            
+        if($i->ticket->status == 3){
+            $res = Fix::where('ticket_id', '=', $i->ticket->id)->first();
+            $resDate = date_create(date('Y-m-d H:i:s', strtotime($res->resolve->created_at))) ;
+            $logDate = date_create(date('Y-m-d H:i:s', strtotime($i->created_at)));
+            $diff = date_diff($logDate,$resDate);
+            $temp = (int)$diff->format("%a");
+            if($pendingDays == 0){
+                $pendingDays = $temp;
+            }
+
+            if($pendingDays < $temp){
+                $pendingDays = $temp;
+            }
+        }else{
+            date_default_timezone_set("Asia/Manila");
+            $logDate = date_create(date('Y-m-d H:i:s', strtotime($i->ticket->created_at)));
+            $currentDate =  date('Y-m-d H:i:s');
+            $cDate =  date_create(date("Y-m-d H:i:s", strtotime($currentDate)));
+            $diff = date_diff($logDate,$cDate);
+            $temp = (int)$diff->format("%a");
+            
+            if($pendingDays == 0){
+                $pendingDays = $temp;
+            }
+
+            if($pendingDays < $temp){
+                $pendingDays = $temp;
+            }
+            // if((int)$diff->format("%a") == 0){
+            //     $pendingDuration =  $diff->format("%h Hour(s) %i Minute(s) %s Second(s)");
+            // }else{
+            //     $pendingDuration =  $diff->format("%a Day(s)");
+            // }
+
+        }
+        $downCounts+=1;
+    }
+
       $categories = CategoryA::all();
-      return view('reports.chart')->with('categories',$categories);
+      $tickets = Ticket::whereMonth('created_at','=', $month)->where('issue_type','=','App\Incident')->get();
+      $ssCountLog = 0;
+      $ssCountRes = 0;
+      $dcsCountLog = 0;
+      $dcsCountRes = 0;
+      $sscCountLog = 0;
+      $sscCountRes = 0;
+      
+      foreach($tickets as $ticket){
+            $store_name = $ticket->store->store_name;
+            if(strpos($store_name, 'Distribution Center') !== false){
+                if(isset($ticket->status)){
+                    if($ticket->status == 3){
+                        $dcsCountRes  += 1;
+                    }
+                }
+                $dcsCountLog  += 1;
+            }elseif(strpos($store_name, 'Main Office') !== false){
+                if(isset($ticket->status)){
+                    if($ticket->status == 3){
+                        $sscCountRes  += 1;
+                    }
+                }
+                $sscCountLog  += 1;
+            }else{
+                if(isset($ticket->status)){
+                    if($ticket->status == 3){
+                        $ssCountRes  += 1;
+                    }
+                }
+                $ssCountLog +=1;
+
+            }
+      }
+
+
+      return view('reports.chart', 
+      ['categories'=>$categories,
+      'downCounts'=>$downCounts, 
+      'pendingDays'=>$pendingDays,
+      'dcsCountRes'=>$dcsCountRes , 
+      'dcsCountLog'=>$dcsCountLog,
+      'sscCountLog'=>$sscCountLog,
+      'sscCountRes'=>$sscCountRes,
+      'ssCountLog'=>$ssCountLog,
+      'ssCountRes'=>$ssCountRes
+      ]);
     }
 
     public function loadLVR(Request $request){
@@ -290,7 +401,9 @@ public function loadChart(){
         $resolve = array();
         $incidents;
         
-        $incidents = Incident::whereYear('created_at', '=', $request->year )
+        $incidents = Incident::whereHas('ticket', function($query){
+            $query->whereNull('deleted_at');
+        })->whereYear('created_at', '=', $request->year )
         ->whereMonth('created_at', '=', $request->month)
         ->get();             
         array_push($logs,  count($incidents));
@@ -323,14 +436,18 @@ public function loadChart(){
         
       if($category == "all"){
             $relation = "catARelation";
-            $incidents = Incident::whereYear('created_at', '=', $request->year )
+            $incidents = Incident::whereHas('ticket', function($query){
+                $query->whereNull('deleted_at');
+            })->whereYear('created_at', '=', $request->year )
             ->whereMonth('created_at', '=', $request->month )
             ->get();
             
             $categories = CategoryA::orderBy('name','asc')->get();
       }else{
             $relation = "catBRelation";
-            $incidents = Incident::whereYear('created_at', '=', $request->year )
+            $incidents = Incident::whereHas('ticket', function($query){
+                $query->whereNull('deleted_at');
+            })->whereYear('created_at', '=', $request->year )
             ->whereMonth('created_at', '=', $request->month )
             ->get();
           

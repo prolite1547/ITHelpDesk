@@ -351,3 +351,10 @@ Route::post('get/deppos', 'SDCController@getDepPos')->name('get.deppos');
  Route::get('/show/{id}/approverstats', 'TicketController@showAppStats')->name('show.appstats');
  Route::get('/get/{id}/appdetails', 'TicketController@getAppStatsDetails')->name('get.appDetails');
  Route::post('create/rticket', 'TicketController@createRTicket')->name('create.rticket'); 
+
+ Route::get('/show/devprojects', 'DevProjController@show')->name('show.devprojs');
+ Route::post('/add/devprojects', 'DevProjController@addProject')->name('add.devprojs');
+ Route::post('/edit/devprojects', 'DevProjController@editProject')->name('edit.devprojs');
+ Route::get('/delete/{id}/devprojects', 'DevProjController@deleteProject')->name('delete.devprojs');
+ Route::get('/get/devprojects','DatatablesController@devProjects')->name('get.devprojs');
+ Route::get('/show/{id}/editdevprojects','DevProjController@showEdit')->name('showEdit.devprojs');

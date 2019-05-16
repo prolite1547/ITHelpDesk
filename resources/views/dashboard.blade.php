@@ -1,10 +1,10 @@
-@if(Auth::user()->role_id === 5)
+@if(Auth::user()->role_id == 5)
     <script>window.location = "/datacorrections/ty/sdc/pending";</script>
-@elseif(Auth::user()->role_id === 6)
+@elseif(Auth::user()->role_id == 6)
     <script>window.location = "/datacorrections/ty2/sdc/pending";</script>
-@elseif(Auth::user()->role_id === 7)
+@elseif(Auth::user()->role_id == 7)
     <script>window.location = "/datacorrections/gc/sdc/pending";</script>
-@elseif(Auth::user()->role_id === 8)
+@elseif(Auth::user()->role_id == 8)
     <script>window.location = "/datacorrections/app/sdc/pending";</script>
 @endif
 

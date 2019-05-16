@@ -5,6 +5,7 @@ import {profileController} from "./ProfileController";
 import {adminPageController} from  "./AdminPageController";
 import {maintenancePageController} from "./maintenancePageController";
 import {treasuryDashboardController} from "./treasury/index";
+import {devProjsController} from "./devprojs/datatable";
 import User from './models/User';
 
 
@@ -35,6 +36,7 @@ elements.popupClose.addEventListener('click',() => {
     const adminPage_route  = new RegExp("\/admin",'gm');
     const maintenancePage_route  = new RegExp("\/maintenance",'gm');
     const treasuryDashboard_route  = new RegExp("\/treasury/dashboard",'gm');
+    const devprojs_route = new RegExp("\/show/devprojects",'gm');
     const pathName = window.location.pathname;
 
     switch (true){
@@ -61,6 +63,9 @@ elements.popupClose.addEventListener('click',() => {
         case treasuryDashboard_route.test(pathName):
             treasuryDashboardController();
             break;
+        case devprojs_route.test(pathName):
+            devProjsController();
+        break;
         default:
             console.log('route not set');
     }

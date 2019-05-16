@@ -15,6 +15,7 @@ use App\Category;
 use App\Store;
 use App\SystemDataCorrection;
 use App\ManualDataCorrection;
+use App\DevProject;
 
 
 
@@ -255,5 +256,14 @@ class DatatablesController extends Controller
         $datatablesJSON = DataTables::of($query);
         return $datatablesJSON->make(true);
     }
+
+    public function devProjects(){
+        $query = DB::table('dev_projects as dp')
+        ->selectRaw('dp.id,dp.project_name,dp.assigned_to,dp.status,dp.date_start,dp.date_end,dp.md50_status');
+        $query = $query->whereNull('deleted_at');
+        $datatablesJSON = DataTables::of($query);
+        return $datatablesJSON->make(true);
+    }  
+
 
 }

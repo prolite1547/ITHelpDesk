@@ -171,7 +171,7 @@
     </button>
 </div>
 
-@if ((!$ticket->SDC && !$ticket->MDC) && $ticket->status !== $ticket_status_arr['Closed'] && $ticket->status !== $ticket_status_arr['Fixed'] && $ticket->status !== $ticket_status_arr['Expired'])
+@if ((!$ticket->SDC && !$ticket->MDC) && ($ticket->status != $ticket_status_arr['Closed'] && $ticket->status != $ticket_status_arr['Fixed'] && $ticket->status != $ticket_status_arr['Expired']))
     <div class="ticket-details__title-box">
         <div class="ticket-details__title">
             <h4 class="heading-quaternary">Create/Add Data Correction</h4>
