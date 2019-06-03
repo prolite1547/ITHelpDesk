@@ -25,17 +25,17 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $ongoingMailInc = \App\ConnectionIssue::with(['incident.ticket' => function($query){
-                $query->whereStatus(2);
-            },'incident.ticket.connectionIssueMailReplies' => function($query){
+            $ongoingMailInc = \App\ConnectionIssue::whereHas('incident.ticket',function($query){
+                $query->where('status',2);
+            })->with(['incident.ticket.connectionIssueMailReplies' => function($query){
                 $query->latest('reply_date');
             }])->get();
-
+                
             foreach ($ongoingMailInc as $connection_issue){
                 $ticketID =  $connection_issue->incident->ticket->id;
                 $subject = $connection_issue->incident->subject . " (TID#{$ticketID})";
                 $latest_reply = $connection_issue->incident->ticket->connectionIssueMailReplies->first(); /*latest reply on the database*/
-
+                
                 fetchNewConnectionIssueEmailReplies($ticketID,$subject,$latest_reply);
             }
         })->everyMinute()->runInBackground();

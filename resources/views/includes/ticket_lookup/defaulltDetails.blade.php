@@ -15,27 +15,44 @@
     <span class="ticket-details__id">Ticket ID: #{{$ticket->id}}</span>
     <ul class="ticket-details__list">
        
-       
+        <li class="ticket-details__item">
+           <span class="ticket-details__field">  </span>
+           @if (isset($ticket->crt_id))
+           @if ($ticket->statusRelation->name != "Expired" AND $ticket->statusRelation->name != "Closed" )
+                   {{-- <a class="ticket-details__value ticket-details__value--link" href="/relate/{{$ticket->id}}/ticket">(+) Add Related Ticket </a> --}}
+                   {{-- <span class="ticket-details__field"></span> --}}
+                    
+                       <button class="btn btn--blue" data-rid="{{$ticket->id}}" id="btnAddRelated">(+) Add Related Ticket</button><br>
+                   
+              
+           @endif
+        @endif
+        </li>  
+        @if (isset($ticket->prt_id))
         <li class="ticket-details__item"><span class="ticket-details__field">Related to:</span>
-            @if (isset($ticket->prt_id) Or isset($ticket->crt_id) )
-                   @if (isset($ticket->crt_id))
-                            @foreach ($cTicket as $tcket) 
-                                        <a class="ticket-details__value ticket-details__value--link" href="/tickets/view/{{ $tcket->id }}"> <span>[C] Ticket ID: #{{ $tcket->id }}</span></a> | <span>  Status : {{$tcket->statusRelation->name}}</span>
-                            @endforeach
-                   @elseif (isset($pTicket))
-                                    <a class="ticket-details__value ticket-details__value--link" href="/tickets/view/{{$ticket->prt_id}}"> <span>[P] Ticket ID: #{{$ticket->prt_id}}</span></a> | <span>  Status : {{$pTicket->statusRelation->name}}</span>
-                   @endif
-            @else
-                    @if ($ticket->statusRelation->name != "Expired" AND $ticket->statusRelation->name != "Closed" )
-                            {{-- <a class="ticket-details__value ticket-details__value--link" href="/relate/{{$ticket->id}}/ticket">(+) Add Related Ticket </a> --}}
-                            {{-- <span class="ticket-details__field"></span> --}}
-                            <button class="btn btn--blue" data-rid="{{$ticket->id}}" id="btnAddRelated">(+) Add Related Ticket</button>
-                    @else
-                        N/A
-                    @endif
-                
-            @endif
+          
+                  @if (isset($pTicket))
+                        <a class="ticket-details__value ticket-details__value--link" href="/tickets/view/{{$ticket->prt_id}}"> <span>[P] Ticket ID: #{{$ticket->prt_id}}</span></a> | <span>  Status : {{$pTicket->statusRelation->name}}</span>
+                  @endif
+           
         </li>
+         @endif
+        @if (isset($ticket->crt_id))
+         
+            @if (isset($ticket->crt_id))
+                    <?php $counter = 0;?>
+                    @foreach ($cTicket as $tcket) 
+                    <li class="ticket-details__item"><span class="ticket-details__field">
+                         
+                    </span>
+                         <a class="ticket-details__value ticket-details__value--link" href="/tickets/view/{{ $tcket->id }}"> <span>[C] Ticket ID: #{{ $tcket->id }}</span></a> | <span>  Status : {{$tcket->statusRelation->name}}</span>  
+                    </li>  
+                    @endforeach
+                    
+            @endif
+       @endif
+        
+   
    
         @if($ticket->extended->count() > 0)
             <li class="ticket-details__item"><span class="ticket-details__field">Times Extended:</span>

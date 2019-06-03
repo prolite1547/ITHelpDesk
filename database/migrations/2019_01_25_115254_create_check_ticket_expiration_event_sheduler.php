@@ -20,7 +20,7 @@ class CreateCheckTicketExpirationEventSheduler extends Migration
             ON SCHEDULE EVERY 1 MINUTE
             STARTS CURRENT_TIMESTAMP
             DO
-                UPDATE tickets set status = 6 WHERE now() >= expiration AND status != 3;
+                UPDATE tickets set status = 6 WHERE now() >= expiration AND status NOT IN (3,4);
         ');
     }
 

@@ -5,8 +5,10 @@ import Contact from './models/Contact';
 import ConnectionIssue from "./models/ConnectionIssue";
 import Position from "./models/Position";
 import Department from "./models/Department";
-import ConnectionIssueReply from "./models/ConnectionIssueReply";
-import Ticket from "./models/Ticket";
+import StoreVisitTarget from "./models/StoreVisitTarget";
+import StoreVisitDetail from "./models/StoreVisitDetail";
+import {reloadTable} from "./views/storeVisit";
+
 
 export const sendForm = (e) => {
     if(e.target.checkValidity()){
@@ -21,25 +23,37 @@ export const sendForm = (e) => {
         /*SERIALIZE FORM DATA*/
         formdata = $(form).serialize();
 
-        if(form.id === 'addCaller'){
-            object =  new Caller();
-        }else if(form.id === 'addBranch'){
-            object = new Store();
-        }else if(form.id === 'addContact'){
-            object = new Contact();
-        }else if(form.id === 'addPLDTIssue'){
-            showModal(false,false);
-            renderLoader(elements.modalContent);
-            object = new ConnectionIssue();
-            formdata = new FormData(form);
-        }else if(form.id === 'addPosition'){
-            object = new Position();
-        }else if(form.id === 'addDepartment'){
-            object = new Department();
-        }else {
-            alert('form not found');
+        switch (form.id) {
+            case 'addCaller':
+                object =  new Caller();
+                break;
+            case 'addBranch':
+                object = new Store();
+                break;
+            case 'addContact':
+                object = new Contact();
+                break;
+            case 'addPLDTIssue':
+                showModal(false,false);
+                renderLoader(elements.modalContent);
+                object = new ConnectionIssue();
+                formdata = new FormData(form);
+                break;
+            case 'addPosition':
+                object = new Position();
+                break;
+            case 'addDepartment':
+                object = new Department();
+                break;
+            case 'addStoreVisitTarget':
+                object = new StoreVisitTarget();
+                break;
+            case 'addStoreVisitDetail':
+                object = new StoreVisitDetail();
+                break;
+            default:
+                alert('form not found');
         }
-
 
         if(object){
             object.storeData(formdata)
@@ -49,12 +63,7 @@ export const sendForm = (e) => {
                         hideModal();
                         form.reset();
                         setDisable(formSbmtBtn,false);
-
-                        if(data.response){
-                            if(data.response === 'emailConIssueSentSuccess'){
-                                window.location = `/tickets/view/${data.data.ticket_id}`;
-                            }
-                        }
+                        responseHandler(data);
                 })
                 .fail((jqXHR,textStatus,errorThrown) => {
                         clearLoader();
@@ -114,3 +123,20 @@ export const disableSubmitBtn = (btn,text = '',disable = true) => {
 export const disableInputElements = (nodeList,disable) => {
     for (let input of nodeList) input.disabled = disable;
 };
+
+
+function responseHandler(data){
+    switch (data.response) {
+        case 'emailConIssueSentSuccess':
+            window.location = `/tickets/view/${data.data.ticket_id}`;
+        break;
+        case 'storeVisitTarget':
+            data.success === true ? reloadTable('targetTable') : false;
+        break;
+        case 'storeVisitDetails':
+            data.success === true ? reloadTable('detailsTable') : false;
+            break;
+        default:
+            alert('response not found!');
+    }
+}

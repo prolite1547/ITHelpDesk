@@ -63,8 +63,15 @@ export const elements = {
 
     btnAddRelated: document.getElementById('btnAddRelated'),
     btnShowAppStats: document.getElementById('appStatus'),
+
     /*ADMIN PAGE*/
     addUserBtn: document.querySelector('[data-action=addUserBtn]'),
+
+    /*Add Ticket Page */
+    windowMaintenance: document.querySelector('.window__maintenance'),
+    /* Maintenance Page El */
+    plusToggleContainer: document.querySelector('.form-categoriesAdd'),
+
 };
 
 export const elementStrings = {
@@ -90,6 +97,10 @@ export const elementStrings = {
 
     /*ADMIN PAGE*/
     addUserFrom: 'addUser',
+
+    /*Technical Store Visit*/
+    targetTable:'#storeTarget',
+    detailsTable:'#storeDetails',
 };
 
 

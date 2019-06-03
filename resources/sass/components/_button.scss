@@ -101,7 +101,21 @@
 }
 
 .sprite {
+    position: relative;
     height: 2rem;
     width: 2rem;
     fill: $color-grey-dark;
+    cursor: pointer;
+    z-index: 1;
+    & use {
+        position: relative;
+        z-index: 10;
+    }
+    &--red {
+        fill: $color-red;
+    }
+
+    &--blue {
+        fill: $color-blue-light-1;
+    }
 }

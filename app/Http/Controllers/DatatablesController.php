@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Status;
+use App\StoreVisitDetail;
+use App\StoreVisitTarget;
 use App\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -53,7 +55,7 @@ class DatatablesController extends Controller
                     return $query->whereStatusId($get_status->id);
                 })
                 ->when($status === 'my', function ($query) {
-                    return $query->whereAssigneeId(Auth::user()->id)->where('status_id', '!=', 3);
+                    return $query->whereAssigneeId(Auth::id())->where('status_id', '!=', 3);
                 })
                 ->when($status === 'fixed', function ($query) {
 
@@ -74,8 +76,7 @@ class DatatablesController extends Controller
                         ->addSelect('resolver','resolved_date');
                 });
         }
-        $datatablesJSON = DataTables::of($query);
-        return $datatablesJSON->make(true);
+        return DataTables::of($query)->toJson();
     }
 
     // public function sdc(){
@@ -190,8 +191,7 @@ class DatatablesController extends Controller
          }
      }  
         $query = $query->orderBy('system_data_corrections.created_at', 'desc');
-        $datatablesJSON = DataTables::of($query);
-        return $datatablesJSON->make(true);
+        return DataTables::of($query)->toJson();
     }
 
     public function govcomp($status)
@@ -265,5 +265,25 @@ class DatatablesController extends Controller
         return $datatablesJSON->make(true);
     }  
 
+    public function storeVisit($table){
+        if($table === 'targets'){
+            $model = StoreVisitTarget::all('id','month','year','num_of_stores','created_at');
+        }else if($table === 'details'){
+            $model = StoreVisitDetail::with(['status:id,name','store:id,store_name'])
+                ->join('users as u','it_personnel','u.id')
+                ->select(
+            'store_visit_details.id',
+                    'store_visit_details.store_id',
+                    'status_id',
+                    'start_date',
+                    'end_date','store_visit_details.created_at'
+                    ,DB::raw('CONCAT_WS(" ",fname,lName) as full_name')
+                )
+                ->get();
+        }else{
+            die('store visit table not found!');
+        }
 
+        return DataTables::of($model)->toJson();
+    }
 }

@@ -49,4 +49,8 @@ class PublicController extends Controller
         return view('search')->with(compact('search_results'));
     }
 
+    public function storeOperations(){
+         return view('store_operation');
+    }
+
 }

@@ -25,6 +25,8 @@
 @import "components/fieldset";
 @import "components/notif-box";
 @import "components/resolve-lookup";
+@import "components/modal";
+@import "components/icon-btn";
 
 
 
@@ -45,3 +47,6 @@
 @import "pages/incompleteTicket";
 @import "pages/storeContactMdl";
 @import "pages/extendDetailsMdl";
+@import "pages/maintenance";
+@import "pages/storeVisit";
+@import "pages/storeOperation";

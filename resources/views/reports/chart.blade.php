@@ -1,19 +1,19 @@
 @include('reports.chartheader')
     
-            
-              <div class="container" style="margin-top:100px;margint-bottom:10px;">
+     
+              <div class="container" style="margin-top:100px;margin-bottom:10px;">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="panel panel-primary panel-colorful">
                             <div class="pad-all text-center">
-                            <span class="text-3x text-thin">{{ $downCounts }}/{{ $pendingDays }}</span>
+                            <span class="text-3x text-thin">{{ $downCounts }}/{{  $pendingDays  }}</span>
                                 <p>NETWORK DOWN</p>
                                 <i class="demo-pli-shopping-bag icon-lg"></i>
                             </div>
                         </div>
                     </div>
                    
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="panel panel-dark panel-colorful">
                             <div class="pad-all text-center">
                             <span class="text-3x text-thin">{{ $ssCountRes }}/{{ $ssCountLog }}</span>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="panel panel-primary panel-colorful">
                             <div class="pad-all text-center">
                             <span class="text-3x text-thin">{{ $dcsCountRes }}/{{ $dcsCountLog }}</span>
@@ -33,7 +33,10 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="panel panel-dark panel-colorful">
                             <div class="pad-all text-center">
                             <span class="text-3x text-thin">{{ $sscCountRes }}/{{$sscCountLog }}</span>
@@ -42,12 +45,30 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
+                    <div class="col-md-4">
+                        <div class="panel panel-primary panel-colorful">
+                            <div class="pad-all text-center">
+                            <span class="text-3x text-thin">{{ $devDoneCount }}/{{$devProjects }}</span>
+                                <p>DEV Projects</p>
+                                <i class="demo-pli-shopping-bag icon-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="panel panel-dark panel-colorful">
+                            <div class="pad-all text-center">
+                            <span class="text-3x text-thin">0/0</span>
+                                <p>Technical Visits</p>
+                                <i class="demo-pli-shopping-bag icon-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <hr>
-               
                   {{-- MONTHLY LOGGED VS. RESOLVED --}}
-                    <div class="logggedvsresolved" style="margin-top:100px;">
+                    <div class="logggedvsresolved" >
                             <h2>Logged vs. Resolved (<span class="lvryear1"></span>) </h2>
                             <hr>
                             <div class="row">

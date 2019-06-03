@@ -128,6 +128,51 @@ const allTickets = {
     ]
 };
 
+export const store_visit_target = {
+    ajax: '/store-visit/targets',
+    order: [[3, 'desc']],
+    columns: [
+        {data:
+            (row) => {
+                return moment().month(row.month - 1).format("MMMM");
+            }
+        },
+        {data: 'year'},
+        {data: 'num_of_stores'},
+        {data:
+                (row) => {
+                    return moment(row.created_at).format("MMM DD, YYYY");
+                }
+        },
+        {
+            data: 'id',
+            render:(data) => {
+                return `<svg class="sprite sprite--blue storeVisit__edit"><use xlink:href="/svg/sprite2.svg#icon-edit" data-action="editStoreVisitTarget" data-id="${data}"></use></svg>
+                <svg class="sprite sprite--red storeVisit__delete"><use xlink:href="/svg/sprite2.svg#icon-trash" data-action="deleteStoreVisitTarget" data-id="${data}"></use></svg>`;
+            }}
+    ]
+};
+
+export const store_visit_details = {
+    ajax: '/store-visit/details',
+    order: [[5, 'desc']],
+    columns:
+    [
+        {data:'store.store_name'},
+        {data: 'full_name'},
+        {data: 'status.name'},
+        {data:'start_date'},
+        {data:'end_date'},
+        {data:'created_at'},
+        {
+            data: 'id',
+            render: (data) => {
+                return `<svg class="sprite sprite--blue storeVisit__edit"><use xlink:href="/svg/sprite2.svg#icon-edit" data-action="editStoreVisitDetails" data-id="${data}"></use></svg>
+                <svg class="sprite sprite--red storeVisit__delete"><use xlink:href="/svg/sprite2.svg#icon-trash" data-action="deleteStoreVisitDetails" data-id="${data}"></use></svg>`;
+            }
+        }
+    ]
+};
 
 export const posTickets = {
     ajax: '/tickets/ticket-data/pos',

@@ -7,7 +7,7 @@
         $status = $sdc->status;
         $forward_status = $sdc->forward_status;
  
-        if((($role_id >=1 AND $role_id <=4) AND ($status!=0 AND $status!=3 AND $status!=2)) OR (($role_id === 5 AND $forward_status != 1) OR ($role_id === 5 AND $forward_status == 1 AND $status == 2)) OR (($role_id === 6 AND $forward_status != 2) OR ($role_id === 6 AND $forward_status == 2 AND $status == 2)) OR (($role_id === 7 AND $forward_status != 3) OR ($role_id === 7 AND $forward_status == 3 AND $status == 2)) OR (($role_id === 8 AND $forward_status != 4) OR ($role_id === 8 AND $forward_status == 4 AND $status == 2))){
+        if((($role_id >=1 AND $role_id <=4) AND ($status!=0 AND $status!=3 AND $status!=2)) OR (($role_id == 5 AND $forward_status != 1) OR ($role_id == 5 AND $forward_status == 1 AND $status == 2)) OR (($role_id == 6 AND $forward_status != 2) OR ($role_id == 6 AND $forward_status == 2 AND $status == 2)) OR (($role_id == 7 AND $forward_status != 3) OR ($role_id == 7 AND $forward_status == 3 AND $status == 2)) OR (($role_id == 8 AND $forward_status != 4) OR ($role_id == 8 AND $forward_status == 4 AND $status == 2))){
                 echo "<script>location.href=window.history.back()</script>";
         }
 ?>
@@ -79,7 +79,7 @@
     </div>
 @endif
 {{-- SUPPORT FILL IN --}}
-@if(Auth::user()->role_id === 1 OR Auth::user()->role_id === 2 OR Auth::user()->role_id === 3 OR Auth::user()->role_id === 4 OR Auth::user()->role_id === 8  )
+@if(Auth::user()->role_id == 1 OR Auth::user()->role_id == 2 OR Auth::user()->role_id == 3 OR Auth::user()->role_id == 4 OR Auth::user()->role_id == 8  )
                     <div class="row">
                       <div class="col-md-4 mb-3">
                         <label for="datesubmitted">Date Submitted : </label>
@@ -117,7 +117,7 @@
                                 
                             <label for="supervisor">Dept. Supervisor : </label>
                             <div class="input-group">
-                            <select class="custom-select d-block w-100" name="supervisor" id="supervisor" required @if (Auth::user()->role_id === 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
+                            <select class="custom-select d-block w-100" name="supervisor" id="supervisor" required @if (Auth::user()->role_id == 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
                                         disabled   
                                        @endif>
                                         <option data-id="0"   value="">Choose...</option>
@@ -134,7 +134,7 @@
                                                 </div>
                         </div>        
                             {{-- <div class="input-group">
-                                <input type="text" class="form-control input-validate" name="supervisor" style="text-transform:uppercase;"  value="{{ $sdc->dept_supervisor }}" id="supervisor" required @if (Auth::user()->role_id === 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
+                                <input type="text" class="form-control input-validate" name="supervisor" style="text-transform:uppercase;"  value="{{ $sdc->dept_supervisor }}" id="supervisor" required @if (Auth::user()->role_id == 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
                                 disabled   
                                @endif>
                                 <div class="invalid-tooltip " style="width: 100%;">
@@ -145,12 +145,12 @@
 
                         <div class="col-md-4 mb-3">
                                 <label for="department">Department : </label>
-                                <input type="text" class="form-control" name="department" id="department"  value="<?php echo $sdc->department ?>"   @if (Auth::user()->role_id === 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
+                                <input type="text" class="form-control" name="department" id="department"  value="<?php echo $sdc->department ?>"   @if (Auth::user()->role_id == 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
                                 disabled   
                                 @else 
                                 readonly
                                @endif>
-                                  {{-- <select class="custom-select d-block w-100 input-validate" name="department" id="department" required @if (Auth::user()->role_id === 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
+                                  {{-- <select class="custom-select d-block w-100 input-validate" name="department" id="department" required @if (Auth::user()->role_id == 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
                                                 disabled   
                                                @endif>
                                         
@@ -168,12 +168,12 @@
 
                         <div class="col-md-3 mb-3">
                                 <label for="position">Position : </label>
-                                <input type="text" class="form-control" name="position" id="position"  value="<?php echo $sdc->position ?>"   @if (Auth::user()->role_id === 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
+                                <input type="text" class="form-control" name="position" id="position"  value="<?php echo $sdc->position ?>"   @if (Auth::user()->role_id == 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))
                                 disabled   
                                 @else 
                                 readonly
                                @endif>
-                         {{-- <select class="custom-select d-block w-100 input-validate" data-position="{{ $sdc->position }}" name="position" id="position"   required @if (Auth::user()->role_id === 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))disabled @endif>
+                         {{-- <select class="custom-select d-block w-100 input-validate" data-position="{{ $sdc->position }}" name="position" id="position"   required @if (Auth::user()->role_id == 8 OR ($sdc->status != 2 AND $sdc->status != 0 ))disabled @endif>
                                 
                                      
                                 </select> --}}
@@ -190,7 +190,7 @@
                     </div>
 
 {{-- VISIBLE TO TREASURY USERS AND SUPPORTS --}}
-@if (Auth::user()->role_id === 1 OR Auth::user()->role_id === 2 OR Auth::user()->role_id === 3 OR Auth::user()->role_id === 4 OR Auth::user()->role_id === 5 OR Auth::user()->role_id === 6 OR Auth::user()->role_id === 8)
+@if (Auth::user()->role_id == 1 OR Auth::user()->role_id == 2 OR Auth::user()->role_id == 3 OR Auth::user()->role_id == 4 OR Auth::user()->role_id == 5 OR Auth::user()->role_id == 6 OR Auth::user()->role_id == 8)
                   
                     <div class="row mb-3">
                             <div class="col-md-6 mb-3 ">
@@ -297,7 +297,7 @@
 {{-- END OF 1ST PART SUPPORT FORM --}}
 
 {{-- FOR TREASURY VISIBLE FORM --}}
-@if (Auth::user()->role_id === 5 OR Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+@if (Auth::user()->role_id == 5 OR Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                         <hr>
                             <div style=" color:darkslategray;padding:30px" class="py-3">
                                     <h5><b> - Hard Copy for POS - </b></h5>
@@ -307,7 +307,7 @@
                                     <div class="col-md-4 mb-3">
                                             <label for="hclastzreading">Last Z Reading : </label>
                                             <div class="input-group">
-                                              <input type="text" class="form-control input-validate" name="hclastzreading" value="{{ $sdc->hc_last_z_reading }}" id="hclastzreading"  required @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                              <input type="text" class="form-control input-validate" name="hclastzreading" value="{{ $sdc->hc_last_z_reading }}" id="hclastzreading"  required @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                                   disabled
                                               @endif >
                                                 <div class="invalid-tooltip " style="width: 100%;">
@@ -318,7 +318,7 @@
                                     <div class="col-md-4 mb-3">
                                             <label for="hclastdcr">Last DCR : </label>
                                             <div class="input-group">
-                                             <input type="text" class="form-control input-validate" name="hclastdcr" value="{{ $sdc->hc_last_dcr }}" id="hclastdcr" @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                             <input type="text" class="form-control input-validate" name="hclastdcr" value="{{ $sdc->hc_last_dcr }}" id="hclastdcr" @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                              disabled
                                             @endif   >
                                                 <div class="invalid-tooltip " style="width: 100%;">
@@ -329,7 +329,7 @@
                                     <div class="col-md-4 mb-3">
                                             <label for="hclasttransactionid">Last Transaction ID : </label>
                                             <div class="input-group">
-                                            <input type="text" class="form-control input-validate" name="hclasttransactionid" value="{{ $sdc->hc_last_transaction_id }}" id="hclasttransactionid" required @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                            <input type="text" class="form-control input-validate" name="hclasttransactionid" value="{{ $sdc->hc_last_transaction_id }}" id="hclasttransactionid" required @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                             disabled
                                         @endif  >
                                                 <div class="invalid-tooltip " style="width: 100%;">
@@ -345,7 +345,7 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                              <div class="custom-control custom-checkbox">
-                                                                    <input id="tally" name="hctally" type="checkbox" value="1"  <?php if($sdc->hc_last_accumulator){ echo "checked";}?> class="custom-control-input hcchk" @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                                                    <input id="tally" name="hctally" type="checkbox" value="1"  <?php if($sdc->hc_last_accumulator){ echo "checked";}?> class="custom-control-input hcchk" @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                                                     disabled
                                                                 @endif >
                                                                     <label class="custom-control-label" for="tally">Tally</label>
@@ -354,7 +354,7 @@
 
                                                         <div class="col-md-3">
                                                                 <div class="custom-control custom-checkbox">
-                                                                        <input id="nottally" name="hctally" value="0" type="checkbox" <?php if($sdc->hc_last_accumulator == "0" ){ echo "checked";}?> class="custom-control-input hcchk" @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                                                        <input id="nottally" name="hctally" value="0" type="checkbox" <?php if($sdc->hc_last_accumulator == "0" ){ echo "checked";}?> class="custom-control-input hcchk" @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                                                         disabled
                                                                     @endif >
                                                                         <label class="custom-control-label" for="nottally">Not Tally</label>
@@ -368,7 +368,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="hclastorno">Last OR No. : </label>
                                     <div class="input-group">
-                                     <input type="text" class="form-control input-validate" name="hclastorno" value="{{ $sdc->hc_last_or_no }}" id="hclastorno" required @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                     <input type="text" class="form-control input-validate" name="hclastorno" value="{{ $sdc->hc_last_or_no }}" id="hclastorno" required @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                      disabled
                                  @endif >
                                         <div class="invalid-tooltip " style="width: 100%;">
@@ -388,7 +388,7 @@
                                     <div class="col-md-6 mb-3">
                                             <label for="sclastzreading">Last Z Reading : </label>
                                             <div class="input-group">
-                                            <input type="text" class="form-control input-validate" name="sclastzreading" value="{{ $sdc->sc_last_z_reading }}" id="sclastzreading" required @if (Auth::user()->role_id ===8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                            <input type="text" class="form-control input-validate" name="sclastzreading" value="{{ $sdc->sc_last_z_reading }}" id="sclastzreading" required @if (Auth::user()->role_id ==8 OR $sdc->status == 3 OR $sdc->status == 2)
                                             disabled
                                         @endif  >
                                                 <div class="invalid-tooltip " style="width: 100%;">
@@ -400,7 +400,7 @@
                                     <div class="col-md-6 mb-3">
                                             <label for="sclasttransactionid">Last Transaction ID : </label>
                                             <div class="input-group">
-                                            <input type="text" class="form-control input-validate" name="sclasttransactionid" value="{{ $sdc->sc_last_transaction_id }}" id="sclasttransactionid" required @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                            <input type="text" class="form-control input-validate" name="sclasttransactionid" value="{{ $sdc->sc_last_transaction_id }}" id="sclasttransactionid" required @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                             disabled
                                         @endif  >
                                                 <div class="invalid-tooltip " style="width: 100%;">
@@ -416,7 +416,7 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                              <div class="custom-control custom-checkbox">
-                                                                    <input id="sctally" name="sctally" type="checkbox" value="1" <?php if($sdc->sc_last_accumulator){ echo "checked";}?> class="custom-control-input scchk" @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                                                    <input id="sctally" name="sctally" type="checkbox" value="1" <?php if($sdc->sc_last_accumulator){ echo "checked";}?> class="custom-control-input scchk" @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                                                     disabled
                                                                 @endif >
                                                                     <label class="custom-control-label" for="sctally">Tally</label>
@@ -425,7 +425,7 @@
 
                                                         <div class="col-md-3">
                                                                 <div class="custom-control custom-checkbox">
-                                                                        <input id="scnottally" name="sctally" type="checkbox" value="0" <?php if($sdc->sc_last_accumulator == "0"){ echo "checked";}?> class="custom-control-input scchk" @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                                                        <input id="scnottally" name="sctally" type="checkbox" value="0" <?php if($sdc->sc_last_accumulator == "0"){ echo "checked";}?> class="custom-control-input scchk" @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                                                         disabled
                                                                     @endif >
                                                                         <label class="custom-control-label" for="scnottally">Not Tally</label>
@@ -439,7 +439,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="sclastorno">Last OR No. : </label>
                                     <div class="input-group">
-                                    <input type="text" class="form-control input-validate" name="sclastorno" value="{{ $sdc->sc_last_or_no }}" id="sclastorno" required  @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                                    <input type="text" class="form-control input-validate" name="sclastorno" value="{{ $sdc->sc_last_or_no }}" id="sclastorno" required  @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                     disabled
                                 @endif >
                                         <div class="invalid-tooltip " style="width: 100%;">
@@ -462,7 +462,7 @@
  
 
 {{-- VIEWABLE BY GOV.COMPLIANCE/APPROVER USERS --}}
-@if (Auth::user()->role_id === 5 OR Auth::user()->role_id === 6 OR Auth::user()->role_id === 7 OR Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2 )
+@if (Auth::user()->role_id == 5 OR Auth::user()->role_id == 6 OR Auth::user()->role_id == 7 OR Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2 )
                       <hr>
 
                       <div class="row mb-3">
@@ -642,7 +642,7 @@
 @endif        
 {{-- REMARKS END --}}  
  
-@if (Auth::user()->role_id === 6 OR Auth::user()->role_id === 7 OR Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+@if (Auth::user()->role_id == 6 OR Auth::user()->role_id == 7 OR Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
 <hr>
 <div style="background-color:#2c3e50;color:white;" class="py-3 text-center mb-3">
         <h4>PRE-CORRECTION VERIFICATION</h4>
@@ -718,7 +718,7 @@
 {{-- TREASURY FORM END  --}}
 
 {{-- FORM VIEW FOR GOV. COMPLIANCE USERS --}}
-@if (Auth::user()->role_id === 7 OR Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+@if (Auth::user()->role_id == 7 OR Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
 <hr>
 <div style="background-color:#2c3e50;color:white;" class="py-3 text-center mb-3">
         <h4>ACCUMULATORS</h4>
@@ -1208,7 +1208,7 @@
                 <div class="col-md-12">
                         <label for="tyremarks">Remarks :</label>
                         <div class="input-group">
-                        <textarea type="text" class="form-control text-area" name="govcompremarks" cols="5" rows="5" id="govcompremarks" required @if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+                        <textarea type="text" class="form-control text-area" name="govcompremarks" cols="5" rows="5" id="govcompremarks" required @if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                                         disabled
                                     @endif >{{ $sdc->govcomp_remarks }}</textarea>
                         <div class="invalid-tooltip " style="width: 100%;">
@@ -1224,7 +1224,7 @@
 
 {{-- END OF GOV. COMPLIANCE FORM --}}
 {{-- APPROVER FORM --}}
-@if (Auth::user()->role_id === 8 OR $sdc->status == 3 OR $sdc->status == 2)
+@if (Auth::user()->role_id == 8 OR $sdc->status == 3 OR $sdc->status == 2)
                       <hr>
                       <div style="background-color:#2c3e50;color:white;" class="py-3 text-center mb-3">
                               <h4>APPROVAL OF THE CHANGE REQUEST</h4>
@@ -1292,7 +1292,7 @@
 {{-- END OF APPROVER FORM --}}
 
 {{-- SUPPORTS VIEWABLE FORM AFTER APPROVER IS DONE --}}
-@if(Auth::user()->role_id === 1 OR Auth::user()->role_id === 2 OR Auth::user()->role_id === 3 OR Auth::user()->role_id === 4)
+@if(Auth::user()->role_id == 1 OR Auth::user()->role_id == 2 OR Auth::user()->role_id == 3 OR Auth::user()->role_id == 4)
 @if ($sdc->status == 3)
 
                       <hr>

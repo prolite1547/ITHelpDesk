@@ -8,7 +8,7 @@ import {
 
 
 export const devProjsController = () => {
-    $('#devprojs-table').DataTable({
+   var table =  $('#devprojs-table').DataTable({
         dom: 'lrtip',
         processing: true,
         serverSide: true,
@@ -82,6 +82,14 @@ export const devProjsController = () => {
    }); 
    
 
-    
+   var timer = null;
+
+   $('#devsearch').on('keyup', function () {
+       clearTimeout(timer); 
+       timer = setTimeout(function(){
+           var inputValue = $("#devsearch").val();
+           table.column(0).search(inputValue, true, false).draw();     
+   }, 500)
+   });
 
 }

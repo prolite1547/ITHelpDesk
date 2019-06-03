@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\CategoryA;
+use App\CategoryB;
 use App\Department;
 use App\Expiration;
 use App\Http\Resources\CallerCollection;
+use App\Http\Resources\CategoyAResource;
+use App\Http\Resources\CategoyBResource;
 use App\Http\Resources\ContactCollection;
 use App\Http\Resources\DepartmentCollection;
 use App\Http\Resources\ExpirationCollection;
@@ -88,7 +92,40 @@ class SelectController extends Controller
         if($request->query('q')){
             return UserResource::collection(User::whereRaw('CONCAT_WS(" ",fName,mName,lName) LIKE "%'.$request->q.'%"')->get());
         }else{
-            return UserResource::collection(User::all());
+            return UserResource::collection(User::where('userable_type','<>','App\TempUser')->orderBy('fName')->get());
+        }
+    }
+
+    public function techUsers(Request $request){
+
+        if($request->query('q')){
+            return UserResource::collection(User::whereRaw('CONCAT_WS(" ",fName,mName,lName) LIKE "%'.$request->q.'%"')->get());
+        }else{
+            return UserResource::collection(
+                DB::table('users as u')
+                    ->join('positions as p','u.position_id','=','p.id')
+                    ->where('p.position','LIKE',"%Technical%")
+                    ->select('u.id',DB::raw("concat_ws(' ',fName,mName,lName) as full_name"))
+                    ->get()
+            );
+        }
+    }
+
+    public function categoryA(Request $request){
+
+        if($request->query('q')){
+            return CategoyAResource::collection(CategoryA::where('name','LIKE',"%{$request->q}%")->get(['id','name as text']));
+        }else{
+            return CategoyAResource::collection(CategoryA::all('id','name as text'));
+        }
+    }
+
+    public function categoryB(Request $request){
+
+        if($request->query('q')){
+            return CategoyBResource::collection(CategoryB::where('name','LIKE',"%{$request->q}%")->get(['id','name as text']));
+        }else{
+            return CategoyBResource::collection(CategoryB::all('id','name as text'));
         }
     }
 

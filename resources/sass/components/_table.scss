@@ -36,12 +36,16 @@
     }
 
     &__th:first-child {
-        width: 50%;
         text-align: left;
     }
 
+
     &__th {
         padding: .5rem 1.5rem;
+
+        &--ticket {
+            width: 50%;
+        }
     }
 
     &__subject {

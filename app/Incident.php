@@ -24,7 +24,7 @@ class Incident extends Model
     }
 
     public function ticket(){
-        return $this->morphOne('App\Ticket','issue');
+        return $this->morphOne(\App\Ticket::class,'issue');
     }
 
     public function categoryRelation(){

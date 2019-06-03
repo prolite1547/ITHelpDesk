@@ -285,7 +285,7 @@ class TicketController extends Controller
 
             $ticket = Ticket::findOrFail($ticket_id);
             $ticket->update($request->only('expiration', 'type', 'priority', 'assignee', 'status', 'group'));
-            $ticket->issue->update($request->only('subject', 'details', 'category', 'catA', 'catB'));
+            $ticket->issue->update($request->only('subject', 'details', 'category', 'catA', 'catB','catC'));
 
             /*CREATE DIRECTORY NAME*/
             $ticketDirectoryName = str_replace(':', '', preg_replace('/[-,\s]/', '_', $ticket->created_at)) . '_' . $ticket_id;
@@ -484,17 +484,16 @@ class TicketController extends Controller
 
         /*ADD TO REQUEST PARAMETER BAG*/
         $request->request->add(['catC' => $catC, 'category' => 3, 'catB' => $catB, 'catA' => $catB_relations->group->id]);
-
+        
         /*16 IS THE ID OF THE CATEGORY B VOICE*/
-        if ($catB === 16) {
+        if ((int)$catB === 16) {
             $validation = $validation + $voice;
-
-        } elseif ($catB === 17) {
+        } elseif ((int)$catB === 17) {
             $validation = $validation + $data;
         } else {
             $validation = $validation + $data + $voice;
         }
-
+        
         $request->validate($validation);
         $expiration = Carbon::now()->addHours($catB_relations->getExpiration->expiration);
 

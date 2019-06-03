@@ -219,7 +219,7 @@ if (! function_exists('fetchNewConnectionIssueEmailReplies')) { /*fetch new mail
 
         $inboxFolder = $oClient
             ->getFolder('INBOX');
-
+        
         $inboxMessages = $inboxFolder
             ->query()
             ->on($date)
@@ -229,6 +229,7 @@ if (! function_exists('fetchNewConnectionIssueEmailReplies')) { /*fetch new mail
             ->setFetchAttachment(true)
             ->get();
 
+        
         foreach ($inboxMessages as $message){
 
                 $reply = (new \EmailReplyParser\Parser\EmailParser())->parse($message->getTextBody())->getVisibleText();
@@ -253,7 +254,7 @@ if (! function_exists('fetchNewConnectionIssueEmailReplies')) { /*fetch new mail
                 }
         }
 
-         die();
+         
 
     }
 }

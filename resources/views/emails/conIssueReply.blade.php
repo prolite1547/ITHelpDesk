@@ -1,1 +1,2 @@
-{{$data['reply']}}
+
+{!!nl2br($data['reply'])!!}

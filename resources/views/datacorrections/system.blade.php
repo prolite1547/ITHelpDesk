@@ -54,7 +54,7 @@
     <hr>
 
 {{-- SUPPORT FILL IN --}}
-        {{-- @if(Auth::user()->role_id === 1 OR Auth::user()->role_id === 2 OR Auth::user()->role_id === 3 OR Auth::user()->role_id === 4 ) --}}
+        {{-- @if(Auth::user()->role_id == 1 OR Auth::user()->role_id == 2 OR Auth::user()->role_id == 3 OR Auth::user()->role_id == 4 ) --}}
                     <div class="row">
                       <div class="col-md-4 mb-3">
                         <label for="datesubmitted">Date Submitted : </label>
@@ -137,7 +137,7 @@
 
                     
 {{-- VISIBLE TO TREASURY USERS AND SUPPORTS --}}
-{{-- @if (Auth::user()->role_id === 1 OR Auth::user()->role_id === 2 OR Auth::user()->role_id === 3 OR Auth::user()->role_id === 4 OR Auth::user()->role_id === 5 ) --}}
+{{-- @if (Auth::user()->role_id == 1 OR Auth::user()->role_id == 2 OR Auth::user()->role_id == 3 OR Auth::user()->role_id == 4 OR Auth::user()->role_id == 5 ) --}}
 
                     <div class="row mb-3">
                             <div class="col-md-6 mb-3 ">
@@ -201,7 +201,7 @@
                    </div>
 {{-- END --}}
 
-{{-- @if (Auth::user()->role_id === 1 OR Auth::user()->role_id === 2 OR Auth::user()->role_id === 3 OR Auth::user()->role_id === 4) --}}
+{{-- @if (Auth::user()->role_id == 1 OR Auth::user()->role_id == 2 OR Auth::user()->role_id == 3 OR Auth::user()->role_id == 4) --}}
 <div class="row">
         <div class="col-md-3 mb-2">
                 <label for="app_group">Approver Group : </label>

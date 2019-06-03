@@ -49,6 +49,28 @@
                     {!! Form::close() !!}
                 </div>
             </div>
+            <div class="form-categoriesAdd">
+                <button class="form-contactAdd__button u-margin-l" type="button"><i
+                        class="fas fa-plus"></i> Add Categories
+                </button>
+                <div class="form-categoriesAdd__content-box u-display-n">
+                    {!! Form::open(['method' => 'POST','class' => 'form','id' => 'addCategoryA']) !!}
+                    <div class="form__group">
+                        <label for="category_a" class="form__label form__label--block"><input type="radio" name="category" value="a" id="category_a" checked> Category A</label>
+                        <label for="category_b" class="form__label form__label--block"><input type="radio" name="category" value="b" id="category_b"> Category B</label>
+                        <label for="category_c" class="form__label form__label--block"><input type="radio" name="category" value="c" id="category_c"> Category C</label>
+                    </div>
+                    <div class="form__group form-categoriesAdd__parent">
+                        {!! Form::label('category','Category A:',['class' => 'form__label']) !!}
+                        {!! Form::select('category',[] ,null, ['placeholder' => '(Choose parent category..)','class' => 'form__input form__input--select2','data-select' => 'categories','id' => 'categoriesSelect','required']) !!}
+                    </div>
+                    <div class="form__group">
+                        {!! Form::text('new_category',null,['class' => 'form__input','placeholder' => 'Enter New Category','required']) !!}
+                    </div>
+                    {!! Form::button('Add',['type' => 'submit','class'=>'btn','data-action' => 'addCategory']) !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
         </div>
     </main>
 @endsection

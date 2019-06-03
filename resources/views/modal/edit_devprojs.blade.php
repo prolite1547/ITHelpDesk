@@ -30,7 +30,7 @@
                             </div>
                             <div class="form__group">
                                     {!! Form::label('dateEnd','Date End :',['class' => 'form__label'])!!}
-                                    {!! Form::date('dateEnd',$project->date_end,['class' => 'form__input','placeholder' => ' ','required','minlength' => 2, 'style'=>'width:300px;']) !!}
+                                    {!! Form::date('dateEnd',$project->date_end,['class' => 'form__input','placeholder' => ' ','minlength' => 2, 'style'=>'width:300px;']) !!}
                             </div>
                             <div class="form__group">
                                     {!! Form::label('statusmd','MD50 Status :',['class' => 'form__label'])!!}

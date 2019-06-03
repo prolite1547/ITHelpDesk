@@ -227,10 +227,11 @@
 
 .form-email {
    width: 100%;
+    font-size: 1.2rem;
 
     &__input-text {
         border: none;
-        font-size: 1.5rem;
+        font-size: inherit;
         padding: .5rem;
         outline: none;
 
@@ -243,7 +244,8 @@
     &__input-textarea{
         display: block;
         border: none;
-        font-size: 1.5rem;
+        font-size: inherit;
+        font-family: inherit;
         padding: .5rem;
         width: 100%;
         outline: none;
@@ -254,7 +256,6 @@
         border: none;
         background-color: $color-grey-light-2;
         color: $color-grey-dark-3;
-        font-size: 1.4rem;
         padding: .5rem;
 
         &:not(:last-child) {

@@ -89,3 +89,37 @@ export const userSelect2 = {
         }
     },
 };
+
+export const technicalUserSelect2 = {
+    width: '100%',
+    ajax: {
+        url: '/select/techUsers',
+        processResults: function (data) {
+            return {
+                results: data.data
+            };
+        }
+    },
+};
+
+export const catBSelect2 = {
+    ajax: {
+        url: '/select/catB',
+        processResults: function (data) {
+            return {
+                results: data.data
+            };
+        }
+    },
+};
+
+export const catASelect2 = {
+    ajax: {
+        url: '/select/catA',
+        processResults: function (data) {
+            return {
+                results: data.data
+            };
+        }
+    },
+};

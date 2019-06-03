@@ -3,10 +3,6 @@
     font-size: $default-font-size;
     padding: 3px 1rem;
 
-    &:hover {
-        color: $color-blue-light-1;
-    }
-
 }
 
 .disabled {
@@ -56,4 +52,9 @@
 
     position: absolute;
     @include  absCenter;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: grey;
+    border: none;
 }

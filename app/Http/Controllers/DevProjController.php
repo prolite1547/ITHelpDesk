@@ -11,7 +11,7 @@ class DevProjController extends Controller
         $onGoing = DevProject::where('status', '=', 'On-Going')->whereNull('deleted_at')->count();
         $testing = DevProject::where('status','=','Testing')->whereNull('deleted_at')->count();
         $done = DevProject::where('status','=', 'Done')->whereNull('deleted_at')->count();
-        $allProj = DevProject::whereNull('deleted_at')->count();
+        $allProj = DevProject::whereNull('deleted_at')->where('md50_status','LIKE','%Done%')->count();
 
         return view('dev.devprojs', ['onGoing'=> $onGoing , 'testing'=> $testing, 'done'=>$done , 'allProj'=>$allProj ]);
     }

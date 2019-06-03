@@ -98,9 +98,13 @@ export const ticketAddController = () => {
 
 
     // elements.addCallerForm.addEventListener('submit', sendForm.bind(this,elementStrings.addCallerSubmit));
-    elements.addPositionForm.addEventListener('submit', glboalScript.sendForm);
-    elements.addDepartmentForm.addEventListener('submit', glboalScript.sendForm);
-    elements.addBranchForm.addEventListener('submit', glboalScript.sendForm);
+    
+    if(elements.windowMaintenance.childElementCount !== 0){
+        elements.addPositionForm.addEventListener('submit', glboalScript.sendForm);
+        elements.addDepartmentForm.addEventListener('submit', glboalScript.sendForm);
+        elements.addBranchForm.addEventListener('submit', glboalScript.sendForm);
+    }
+    
     elements.PLDTForm.addEventListener('submit', glboalScript.sendForm);
 
 

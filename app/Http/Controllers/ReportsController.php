@@ -14,6 +14,7 @@ use App\CategoryA;
 use App\CategoryB;
 use App\Store;
 use App\Fix;
+use App\DevProject;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -378,6 +379,8 @@ public function loadChart(){
             }
       }
 
+      $devProjects = DevProject::where('md50_status','LIKE','%Done%')->whereNull('deleted_at')->count();
+      $devDoneCount = DevProject::where('status','=','Done')->whereNull('deleted_at')->count();
 
       return view('reports.chart', 
       ['categories'=>$categories,
@@ -388,7 +391,9 @@ public function loadChart(){
       'sscCountLog'=>$sscCountLog,
       'sscCountRes'=>$sscCountRes,
       'ssCountLog'=>$ssCountLog,
-      'ssCountRes'=>$ssCountRes
+      'ssCountRes'=>$ssCountRes,
+      'devProjects'=>$devProjects,
+      'devDoneCount'=>$devDoneCount
       ]);
     }
 
