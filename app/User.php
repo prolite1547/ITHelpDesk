@@ -89,6 +89,8 @@ class User extends Authenticatable
                     return 1;
                 case strpos(strtolower($this->position->position), 'technical') !== false:
                     return 2;
+                case strpos(strtolower($this->position->position),'system') !== false:
+                    return 3;
                 default:
                     return 0;
             }

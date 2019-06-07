@@ -19,11 +19,12 @@ class CreateViewForLatestFixes extends Migration
         `fixes`.`id` AS `id`,
         `fixes`.`ticket_id` AS `ticket_id`,
         MAX(`fixes`.`created_at`) AS `fix_date`,
-        `fixes`.`fixed_by` AS `fixed_by`
+        CONCAT_WS(' ', `u`.`fName`, `u`.`lName`) AS `fixed_by`
     FROM
-        `fixes`
-    GROUP BY `fixes`.`ticket_id` , `fixes`.`fixed_by` , `fixes`.`id`
-    ORDER BY `fixes`.`ticket_id` DESC;
+        (`fixes`
+        JOIN `users` `u` ON ((`fixes`.`fixed_by` = `u`.`id`)))
+    GROUP BY `fixes`.`ticket_id`
+    ORDER BY `fixes`.`ticket_id` DESC
         ");
     }
 

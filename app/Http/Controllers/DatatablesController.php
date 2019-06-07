@@ -63,14 +63,9 @@ class DatatablesController extends Controller
                 })
                 ->when($status === 'fixed', function ($query) {
 
-
-
                     return $query->whereStatusId(4)
-                        ->leftJoinSub(DB::table('v_latest_fixes'), 'fixed_details', function ($join) {
-                            $join->on('v_tickets.id', '=', 'fixed_details.ticket_id');
-                        })->leftJoin('users as fixer', 'fixed_details.fixed_by', 'fixer.id')
-                        ->addSelect(DB::raw('CONCAT(fixer.fName," ",fixer.lName) as fixed_by'), 'fix_date');
-
+                    ->join('v_latest_fixes','v_tickets.id','v_latest_fixes.ticket_id')
+                    ->addSelect('fixed_by','fix_date');       
                 })
                 ->when($status === 'closed',function ($query){
                     return $query->join('v_resolves','v_tickets.id','v_resolves.ticket_id')

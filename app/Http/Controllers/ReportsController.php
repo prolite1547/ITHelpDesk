@@ -170,8 +170,7 @@ class ReportsController extends Controller
                     foreach($incidents  as $incident){
                        if(isset($incident->ticket->id)){
                            $status = strtoupper($incident->ticket->statusRelation->name);
-                        //    $resolved = Fix::where('ticket_id','=', $incident->ticket->id)->first();
-                        $resolved = Fix::where('ticket_id','=', $incident->ticket->id)->orderBy('id','desc')->first();
+                           $resolved = Fix::where('ticket_id','=', $incident->ticket->id)->orderBy('id','desc')->first();
 
                             if(isset($resolved->resolve->created_at)){
                                     $resdate = date('m/d/y | H:i:s A', strtotime($resolved->resolve->created_at));
@@ -323,7 +322,8 @@ public function loadChart(){
     $visitDoneCount = 0;
     $issueCount = 0;
     $issueDoneCount = 0;
-    // $month = '';
+    // $month = '5';
+    // $mm = 5;
 
     $incidents = Incident::whereHas('ticket', function($query){
         $query->whereNull('deleted_at');
