@@ -57,7 +57,7 @@ class TicketPolicy
     public function update(User $user, Ticket $ticket)
     {
         $statuses = array(self::$ticket_statuses['Open'],self::$ticket_statuses['Ongoing'],self::$ticket_statuses['Rejected']);
-        return ($user->id === $ticket->assignee || in_array($user->role_id,self::$high_roles)) && in_array($ticket->status,$statuses);
+        return ($user->id == $ticket->assignee || in_array($user->role_id,self::$high_roles)) && in_array($ticket->status,$statuses);
     }
 
 
@@ -121,7 +121,7 @@ class TicketPolicy
     {
         $statuses = array(self::$ticket_statuses['Ongoing'],self::$ticket_statuses['Rejected']);
 
-        return !is_null($ticket->assignee) && ($user->id === $ticket->assignee) && in_array($ticket->status,$statuses) ;
+        return !is_null($ticket->assignee) && ($user->id == $ticket->assignee) && in_array($ticket->status,$statuses) ;
     }
 
 
@@ -135,7 +135,7 @@ class TicketPolicy
      */
     public function extend(User $user, Ticket $ticket)
     {
-        return ($ticket->status === self::$ticket_statuses['Expired']) && in_array($user->role_id,self::$high_roles);
+        return ($ticket->status == self::$ticket_statuses['Expired']) && in_array($user->role_id,self::$high_roles);
     }
 
 
@@ -149,6 +149,6 @@ class TicketPolicy
      */
     public function resolveReject(User $user, Ticket $ticket)
     {
-        return in_array($user->role_id,self::$high_roles) && $ticket->status === self::$ticket_statuses['Fixed'];
+        return in_array($user->role_id,self::$high_roles) && $ticket->status == self::$ticket_statuses['Fixed'];
     }
 }

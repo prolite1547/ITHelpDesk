@@ -5,8 +5,14 @@ import * as maintenanceView from "./views/v_maintenance";
 import CategoryA from "./models/CategoryA";
 import CategoryB from "./models/CategoryB";
 import CategoryC from "./models/CategoryC";
+import EmailGroup from "./models/EmailGroup";
 
 export const maintenancePageController = () => {
+    let m_email_group = {
+        id: 0
+    };
+
+    window.test = m_email_group;
     $(elementStrings.branchSelectContact).on('select2:select', glboalScript.toggleHiddenGroup);
     elements.addContactForm.addEventListener('submit',glboalScript.sendForm);
     $('#contactBranchSelect').select2(branchSelect2);
@@ -70,5 +76,66 @@ export const maintenancePageController = () => {
                 displayError(data)
             });
     })
+
+
+    $('select[name=email_group_id]').on('change',(e) => {
+        /*get emails depending on select value*/
+        m_email_group.id = $(e.target).val();
+        EmailGroup.getEmails(m_email_group.id);
+    });
+
+    $('#email2Add2Group').select2({
+        placeholder: 'Enter emails to be added to the group...',
+        width: '20%',
+        tags: true,
+        tokenSeparators: [',', ' ']
+    });
+
+    $('#addEmailToGroup').on('submit', (e) => {
+        const form = e.target;
+        if(form.checkValidity()){
+            e.preventDefault();
+            const email_group_id = e.target.elements.emailGroupSelect.value;
+
+            $.ajax('/email/group/add',{
+                type: 'POST',
+                data: $(form).serialize()
+            }).done(() => {
+                EmailGroup.getEmails(email_group_id);
+            }).fail(() => alert('failed to add email to the group'));
+        }
+    });
+
+    $('.form-emailGroupAdd__email-table').on('click','.form-emailGroupAdd__remove-mail',(e)  => {
+        $.ajax(`/email/group/delete/pivot/${e.target.id}`,{
+            type:'DELETE'
+        }).done(() => EmailGroup.getEmails(m_email_group.id)).fail(() => alert('failed to delete email from the group'));
+    });
+
+    document.getElementById('addEmail').addEventListener('submit',(e) => {
+       e.preventDefault();
+
+       $.ajax('/email/add',{
+           type: 'POST',
+           data: $(e.target).serialize()
+       }).done(() => alert('Successfully added email!'))
+           .fail((jqXHR) => {
+            displayError(jqXHR)
+       });
+
+    });
+
+    document.getElementById('addEmailGroup').addEventListener('submit',(e) => {
+        e.preventDefault();
+
+        $.ajax('/email-group/add',{
+            type: 'POST',
+            data: $(e.target).serialize()
+        }).done(() => alert('Successfully added email group!'))
+            .fail((jqXHR) => {
+                displayError(jqXHR)
+            });
+
+    });
 
 };

@@ -22,7 +22,7 @@
                             </div>
                             <div class="form__group">
                                     {!! Form::label('status','Status :',['class' => 'form__label'])!!}
-                                    {!! Form::select('status', ['On-Going' => 'On-Going', 'Testing' => 'Testing','Done' => 'Done'], $project->status, ['placeholder' => '(select status)','class' => 'form__input   ','required', 'style'=>'width:300px;']) !!}
+                                    {!! Form::select('status', ['Open'=> 'Open','On-Going' => 'On-Going', 'Testing' => 'Testing','Done' => 'Done'], $project->status, ['placeholder' => '(select status)','class' => 'form__input   ','required', 'style'=>'width:300px;']) !!}
                             </div>
                             <div class="form__group">
                                     {!! Form::label('dateStart','Date Start :',['class' => 'form__label'])!!}

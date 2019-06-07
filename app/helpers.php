@@ -164,11 +164,11 @@ if (! function_exists('cleanInputs')) { /*uppercase words and remove extra white
 
 if (! function_exists('getNumberOfTicketsOnASpecStatus')) { /*uppercase words and remove extra white spaces*/
     function getNumberOfTicketsOnASpecStatus(){
-
+        $group = Auth::user()->group;
         $ticketStatuses = Status::all()->pluck('name','id')->toArray();
         $ticketCounts = array();
-        $ticketCounts['All'] =  Ticket::all()->count();
-        foreach ($ticketStatuses as $key => $value){
+        $ticketCounts['All'] =  Ticket::whereGroup($group)->count();
+        /*foreach ($ticketStatuses as $key => $value){
             if($value === 'Fixed'){
                 $group = Auth::user()->group;
                 $count = Ticket::whereStatus($key)->when($group,function ($query,$group){
@@ -177,6 +177,13 @@ if (! function_exists('getNumberOfTicketsOnASpecStatus')) { /*uppercase words an
             }else{
                 $count = Ticket::whereStatus($key)->count();
             }
+            $ticketCounts[$value] = $count;
+        }*/
+
+        foreach ($ticketStatuses as $key => $value){
+            $count = Ticket::whereStatus($key)->when($group,function ($query,$group){
+                return $query->whereGroup($group);
+            })->count();
             $ticketCounts[$value] = $count;
         }
 
@@ -259,4 +266,6 @@ if (! function_exists('fetchNewConnectionIssueEmailReplies')) { /*fetch new mail
     }
 }
 
-?>
+
+
+

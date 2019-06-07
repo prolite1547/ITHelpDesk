@@ -69,18 +69,18 @@
                                 {{ Form::file('attachments[]', array('multiple'))  }}
                             </div>
                             <div class="form__group">
-                                {{--{!! Form::label('type','Type:',['class' => 'form__label'])!!}--}}
-                                {{--{!! Form::select('type', $issueSelect, null, ['placeholder' => '(select type)','class' => 'form__input','required']) !!}--}}
                                 {!! Form::text('type',1,['class' => 'form__input','hidden','required']) !!}
                                 {!! Form::label('priority','Priority:',['class' => 'form__label'])!!}
                                 {!! Form::select('priority', $prioSelect, null, ['placeholder' => '(select priority)','class' => 'form__input','required']) !!}
                             </div>
                             <div class="form__group">
                                 {!! Form::select('category', $typeSelect, null, ['placeholder' => '(select category)','class' => 'form__input','required']) !!}
+                                {!! Form::select('catA', $categoryASelect, null, ['placeholder' => '(select sub-A)','class' => 'form__input categoryASelect form__input--select2','required']) !!}
+                                {!! Form::select('catB',[], null, ['placeholder' => '(select sub-B)','class' => 'form__input categoryBSelect form__input--select2','required']) !!}
+                                {!! Form::select('catC', $CategoryCSelect, null, ['placeholder' => '(select sub-C)','class' => 'form__input categoryCSelect form__input--select2']) !!}
+                            </div>
+                            <div class="form__group">
                                 {!! Form::select('group', $groupSelect, null, ['placeholder' => '(select group)','class' => 'form__input','required']) !!}
-                                {!! Form::select('catB', $categoryBGroupSelect, null, ['placeholder' => '(select sub-B)','class' => 'form__input categoryBSelect form__input--select2','required']) !!}
-                                {!! Form::select('catC', $CategoryCSelect, null, ['placeholder' => '(select sub-C)','class' => 'form__input categoryCSelect form__input--select2','required']) !!}
-
                             </div>
                             <div class="form__group">
                                 {!! Form::label('assignee','Assign to user:',['class' => 'form__label'])!!}
@@ -93,7 +93,7 @@
                     <div class="window__maintenance plusToggleContainer">
                         @if(in_array(Auth::user()->role_id,[$user_roles['admin'],$user_roles['tower']]))
                             <div class="form-branchAdd">
-                                <button class="form-branchAdd__button u-margin-l " type="button"><i class="fas fa-plus"></i>
+                                <button class="form-branchAdd__button plusToggleContainer__button u-margin-l " type="button"><i class="fas fa-plus"></i>
                                     Add Branch
                                 </button>
 
@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="form-departmentAdd">
-                                <button class="form-departmentAdd__button u-margin-l " type="button"><i class="fas fa-plus"></i>
+                                <button class="form-departmentAdd__button u-margin-l plusToggleContainer__button" type="button"><i class="fas fa-plus"></i>
                                     Add Department
                                 </button>
 
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="form-positionAdd">
-                                <button class="form-positionAdd__button u-margin-l " type="button"><i class="fas fa-plus"></i>
+                                <button class="form-positionAdd__button u-margin-l plusToggleContainer__button" type="button"><i class="fas fa-plus"></i>
                                     Add Position
                                 </button>
                                 <div class="form-positionAdd__content-box u-display-n">
@@ -158,8 +158,14 @@
             {{--PLDT FORM--}}
             <div class="window__content" id="PLDTFormContainer">
                 {{Form::open(array('class' => 'form-email','id' => 'addPLDTIssue','files' => true))}}
-                    {{Form::email('to',null,array('placeholder' => 'To','class'=> 'form-email__input-text u-display-b u-width-full','required','multiple'))}}
-                    {{Form::email('cc',null,array('placeholder' => 'Cc','class'=> 'form-email__input-text u-display-b u-width-full','multiple'))}}
+                    <div class="form__group-flex">
+                        {{Form::label('emailTo','To:')}}
+                        {{Form::select('to[]',$emailAndGroupSelect,null,array('class'=> 'form-email__input-text u-display-b u-width-full','required','multiple','id' => 'emailTo'))}}
+                    </div>
+                    <div class="form__group-flex">
+                        {{Form::label('emailCc','Cc:')}}
+                        {{Form::select('cc[]',$emailAndGroupSelect,null,array('class'=> 'form-email__input-text u-display-b u-width-full','multiple','id' => 'emailCc'))}}
+                    </div>
                     {{Form::text('subject',null,array('placeholder' => 'Subject','class'=> 'form-email__input-text u-display-b u-width-full','required'))}}
                     {{Form::textarea('details',null,array('class' => 'form-email__input-textarea','placeholder' => 'Details','required'))}}
                     <div class="form__group">
@@ -167,7 +173,7 @@
                     </div>
                     <div class="form__group">
                         {{Form::select('branch',[],null,['placeholder' => '(choose branch...)','class' => 'form-email__input-select branchSelect','required'])}}
-                        {{Form::select('concern',$categoryCGroupSelect,null,['placeholder' => '(choose concern...)','class' => 'form-email__input-select form-email__input-select--concern','required'])}}
+                        {{Form::select('concern',$categoryCConnectionGroupSelect,null,['placeholder' => '(choose concern...)','class' => 'form-email__input-select form-email__input-select--concern','required'])}}
                     </div>
                     <div class="form__group">
                         {{Form::select('tel',['083-554-7450' => '083-554-7450'],null,['placeholder' => '(choose telephone...)','class' => 'form-email__input-select form-email__input-select--tel u-display-n'])}}

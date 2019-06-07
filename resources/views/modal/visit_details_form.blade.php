@@ -23,7 +23,7 @@
     <div class="form__group">
         {{Form::label('start_date','Date Start',['required'])}}
         {{Form::date('start_date')}}
-        {{Form::label('end_date','Date End',['required'])}}
+        {{Form::label('end_date','Date End')}}
         {{Form::date('end_date')}}
     </div>
     <div class="form__group">

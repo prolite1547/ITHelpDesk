@@ -14,6 +14,20 @@
                 {!! Form::text(0,null,['placeholder' => 'ticket #','class' => 'form-ticketFilter__input']) !!}
             </div>
             <div class="form-ticketFilter__group">
+                <div class="form-ticketFilter__radio-group">
+                    <label for="fixBy">Fixed By:</label>
+                    <input type="radio" name="filter_user" id="fixBy"  class="form-ticketFilter__radio" value="8">
+                </div>
+                <div class="form-ticketFilter__radio-group">
+                    <label for="rslvBy">Resolved By:</label>
+                    <input type="radio" name="filter_user" id="rslvBy"  class="form-ticketFilter__radio" value="9">
+                </div>
+            </div>
+            <div class="form-ticketFilter__group">
+                {!! Form::label(1,'User:',['class' => 'form-ticketFilter__label form-ticketFilter__label--user']) !!}
+                {!! Form::select(1,$filterAssigneeSelect,null,['placeholder' => '(select user...)','class' => 'form__input--select2 form-ticketFilter__input form-ticketFilter__input--user']) !!}
+            </div>
+            <div class="form-ticketFilter__group">
                 {!! Form::label(1,'Category:',['class' => 'form-ticketFilter__label']) !!}
                 {!! Form::select(1,$categoryFilter,null,['placeholder' => '(select category...)','class' => 'form-ticketFilter__input']) !!}
             </div>

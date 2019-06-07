@@ -61,4 +61,10 @@ class StoreVisitController extends Controller
         $detail = StoreVisitDetail::findOrFail($id);
         return view('modal.visit_details_form',compact('detail'));
     }
+
+    public function getMonthsOnYear($year){
+        $months = StoreVisitTarget::where('year',$year)->pluck('month')->toArray();
+
+        return response()->json($months);
+    }
 }

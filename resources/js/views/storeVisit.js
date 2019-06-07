@@ -3,31 +3,34 @@ import {branchSelect2, technicalUserSelect2} from "../select2";
 import {sendForm} from "../global";
 import {store_visit_details, store_visit_target} from "./datatablesOptions";
 
-
+export const el_container = $('.storeVisit');
 $("#storeTarget").DataTable(store_visit_target);
 $("#storeDetails").DataTable(store_visit_details);
 
 
 export const fetchForm = (action) => {
     beforeShowModal();
-    $.ajax(addUrl(action),{
+    const url = addUrl(action);
+    $.ajax(url,{
         type: 'GET'
     }).done((data) => {
         showModal(data);
-        initSelect2();
         modalFormSubmitListener();
+
+        url.includes('target') ? targetFormInit() : detailsFromInit();
 
     }).fail(() => {alert('Fail to get target form!');clearLoader();});
 };
 
 export const editModal = (action,id) => {
     beforeShowModal();
-    $.ajax(editUrl(action,id),{
+    const url = editUrl(action,id);
+    $.ajax(url,{
         type: 'GET'
     }).fail(() => alert('Failed to get details!'))
         .done((data) => {
             showModal(data);
-            initSelect2();
+            url.includes('target') ? targetFormInit() : detailsFromInit();
         });
 
 };
@@ -69,6 +72,7 @@ function  addUrl(action) {
         url = '/modal/form/visit-details';
     }else if(action === 'addTarget'){
         url = '/modal/form/target';
+
     }else {
         return alert('form not found!');
     }
@@ -105,4 +109,42 @@ function initSelect2() {
 function modalFormSubmitListener() {
     elements.modalContent.querySelector('form').addEventListener('submit',sendForm);
 }
+
+
+function getMonths(year) {
+    $.ajax(`/store-visit/target/${year}`,{
+        type: 'GET'
+    }).done(generateMonthSelect);
+}
+
+
+function generateMonthSelect(data){
+    $('select[name=month]').children().each((index,el) =>{
+        el.disabled = data.includes(parseInt(el.getAttribute('value')));
+    });
+}
+
+function targetFormInit(){
+    const yearSelect = elements.modalContent.querySelector('select[name=year]');
+    const year = yearSelect.value;
+    getMonths(year);
+    yearSelect.addEventListener('change',(e) => getMonths(e.target.value));
+}
+
+function detailsFromInit() {
+    initSelect2();
+
+    const statusSelect = elements.modalContent.querySelector('select[name=status_id]');
+    dynamicRequiredEndDate(statusSelect.value);
+
+    statusSelect.addEventListener('input',(e) => {
+        dynamicRequiredEndDate(e.target.value);
+    });
+}
+
+function dynamicRequiredEndDate(value) {
+    const input_end_date = elements.modalContent.querySelector('input[name=end_date]');
+    input_end_date.required = parseInt(value) === 3;
+}
+
 

@@ -2,4 +2,24 @@
     & > * {
         margin-bottom: 1rem;
     }
+
+    &__button {
+        &,
+        &:link,
+        &:visited
+        {
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 5.6px 10.5px;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            background-color: $color-white;
+        }
+    }
 }

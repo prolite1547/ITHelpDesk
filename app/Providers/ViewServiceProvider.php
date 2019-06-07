@@ -6,6 +6,8 @@ use App\CategoryA;
 use App\CategoryB;
 use App\CategoryC;
 use App\Department;
+use App\Email;
+use App\Http\Resources\UserResource;
 use App\Position;
 use App\Status;
 use Illuminate\Support\Facades\Auth;
@@ -83,7 +85,7 @@ class ViewServiceProvider extends ServiceProvider
             ]);
         });
 
-        view()->composer(['ticket.add_ticket', 'modal.ticket_edit', 'modal.user_add', 'ticket.incomplete', 'modal.r_ticket'], function ($view) {
+        view()->composer(['ticket.add_ticket', 'modal.ticket_edit', 'modal.user_add', 'ticket.incomplete', 'modal.r_ticket','maintenance','includes.ticket_filter'], function ($view) {
             $selfOption = [null => 'None', Auth::id() => 'Self'];
             $statusSelect = DB::table('ticket_status')->pluck('name', 'id')->toArray();  /*Status*/
             $prioSelect = DB::table('priorities')->pluck('name', 'id')->toArray();   /*Priority*/
@@ -95,10 +97,20 @@ class ViewServiceProvider extends ServiceProvider
             $departmentSelect = selectArray('', Department::class, 'id', 'department'); /*Roles*/
             $callerSelect = Caller::get()->pluck('name', 'id');
             $categoryBGroupSelect = groupListSelectArray(CategoryA::class, 'name', 'subCategories', 'id', 'name',array('column' => 'id','values' => [6]));
-            $CategoryCSelect = CategoryC::all()->pluck('name', 'id')->toArray();
+            $categoryCConnectionGroupSelect = groupListSelectArray(CategoryB::class, 'name', 'subCategories', 'id', 'name',array('column' => 'id','values' => [212,213]));
+            $CategoryCSelect = CategoryC::pluck('name', 'id')->toArray();
+            $emails = Email::all();
+            $emailSelect = $emails->pluck('email','id');
+            $emailSelect_connection = $emails->pluck('email','email')->toArray();
+            $email_groups = \App\EmailGroup::select(DB::raw('CONCAT_WS("_","group",id) as temp'),'group_name','id')->get(['text','group_name','id']);
+            $email_groups_select = $email_groups->pluck('group_name','id')->toArray();
+            $email_groups_connection = $email_groups->pluck('group_name','temp')->toArray();
+            $emailAndGroupSelect = array_merge($emailSelect_connection,$email_groups_connection);
             $branchSelect = Store::all()->pluck('store_name', 'id')->toArray();
             $assigneeSelect = groupListSelectArray(Role::class, 'role', 'users', 'id', 'full_name');
-
+            $filterAssigneeSelect = groupListSelectArray(Role::class, 'role', 'users', 'full_name', 'full_name');
+            $categoryASelect = CategoryA::pluck('name','id')->toArray();
+            $usersSelect = User::all()->pluck('full_name','id')->toArray();
             $view->with(compact(
                 'statusSelect',
                 'prioSelect',
@@ -113,8 +125,14 @@ class ViewServiceProvider extends ServiceProvider
                 'categoryBGroupSelect',
                 'selfOption',
                 'groupSelect',
-                'categoryCGroupSelect',
-                'CategoryCSelect'
+                'CategoryCSelect',
+                'emailAndGroupSelect',
+                'categoryCConnectionGroupSelect',
+                'email_groups_select',
+                'emailSelect',
+                'filterAssigneeSelect',
+                'categoryASelect',
+                'usersSelect'
             ));
         });
 

@@ -12,7 +12,7 @@
             {{Form::label('month','Month')}}
             {{Form::selectMonth('month',null,['required'])}}
             {{Form::label('year','Year')}}
-            {{Form::selectRange('year',  date("Y") - 1, date("Y") + 3,null,['required'])}}
+            {{Form::selectRange('year',  date("Y") - 1, date("Y") + 3,date("Y"),['required'])}}
         </div>
         <div class="form__group">
             {{Form::label('num_of_stores','No. of Stores')}}

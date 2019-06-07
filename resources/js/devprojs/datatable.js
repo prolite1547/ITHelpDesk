@@ -92,4 +92,23 @@ export const devProjsController = () => {
    }, 500)
    });
 
+
+   $('#status').on('change',function(){
+        var status = $(this).val();
+        if(status == 'Done'){
+            $('#dateEnd').prop("required", true);
+        }else{
+            $('#dateEnd').removeAttr("required");
+        }
+   });
+
+
+   $(".popup__content").on('change', '#status',function(){
+         var status = $(this).val();
+         if(status == 'Done'){
+            $('#dateEnd').prop("required", true);
+        }else{
+            $('#dateEnd').removeAttr("required");
+        }
+   });
 }

@@ -18,7 +18,7 @@ use App\Store;
 use App\SystemDataCorrection;
 use App\ManualDataCorrection;
 use App\DevProject;
-
+use App\MasterDataIssue;
 
 
 
@@ -40,6 +40,7 @@ class DatatablesController extends Controller
             $query = DB::table('v_tickets as vt')->select('vt.id','vt.catB_name','vt.category','vt.ticket_group_name','vt.subject','vt.details','vt.status_name','vt.assigned_user','vt.store_name','logger','vt.priority_name','vt.created_at')->whereIn('vt.catB',$pos_categories_array);
         }else{
             $statuses = Status::whereNotIn('name', ['fixed','closed'])->pluck('name')->toArray();
+            $group = Auth::user()->group;
             $query = DB::table('v_tickets')
                 ->select(
                     'v_tickets.id', 'v_tickets.priority_name', 'v_tickets.status_id','v_tickets.status_name', 'v_tickets.expiration', 'v_tickets.created_at',
@@ -50,6 +51,9 @@ class DatatablesController extends Controller
                     'v_tickets.ticket_group_name',
                     'v_tickets.times_extended'
                 )
+                ->when($group, function ($query, $group) {
+                    return $query->whereTicketGroupId($group);
+                })
                 ->when(in_array(strtolower($status), array_map('strtolower', $statuses), true), function ($query) use ($status) {
                     $get_status = Status::where('name', $status)->firstOrFail();
                     return $query->whereStatusId($get_status->id);
@@ -59,12 +63,9 @@ class DatatablesController extends Controller
                 })
                 ->when($status === 'fixed', function ($query) {
 
-                    $group = Auth::user()->group;
+
 
                     return $query->whereStatusId(4)
-                        ->when($group, function ($query, $group) {
-                            return $query->whereGroup($group);
-                        })
                         ->leftJoinSub(DB::table('v_latest_fixes'), 'fixed_details', function ($join) {
                             $join->on('v_tickets.id', '=', 'fixed_details.ticket_id');
                         })->leftJoin('users as fixer', 'fixed_details.fixed_by', 'fixer.id')
@@ -285,5 +286,13 @@ class DatatablesController extends Controller
         }
 
         return DataTables::of($model)->toJson();
+    }
+
+    public function addMDSissue(){
+        $query = DB::table('master_data_issues as mdi')
+        ->selectRaw('mdi.issue_name,mdi.status,mdi.start_date,mdi.end_date,mdi.logged_by,mdi.id');
+        $query = $query->whereNull('deleted_at');
+        $datatablesJSON = DataTables::of($query);
+        return $datatablesJSON->make(true);
     }
 }

@@ -54,20 +54,19 @@
                             <a href="{{route('maintenancePage')}}" class="nav__a {{Route::currentRouteName() == 'maintenancePage' ? 'nav__a--active' : ''}}">Maintenance</a>
                         </li>
                     @endif
-                    @if(Auth::user()->role_id == $user_roles['admin'])
-                    <li class="nav__li">
-                        <a href="{{route('adminPage')}}" class="nav__a {{Route::currentRouteName() == 'adminPage' ? 'nav__a--active' : ''}}">Admin</a>
-                    </li>
-                    <li class="nav__li">
-                        <a href="{{route('show.devprojs')}}" class="nav__a {{Route::currentRouteName() == 'show.devprojs' ? 'nav__a--active' : ''}}">DEV Projects</a>
-                    </li>
+                    @if(Auth::user()->role_id == $user_roles['admin'] || Auth::user()->id == 24)
+                        @if (Auth::user()->role_id == $user_roles['admin'])
+                            <li class="nav__li">
+                                <a href="{{route('adminPage')}}" class="nav__a {{Route::currentRouteName() == 'adminPage' ? 'nav__a--active' : ''}}">Admin</a>
+                            </li>
+                        @endif
+                        @if (Auth::user()->role_id == $user_roles['admin'] || Auth::user()->id == 24)
+                            <li class="nav__li">
+                                    <a href="{{route('storeOperations')}}" class="nav__a {{Route::currentRouteName() == 'storeOperations' ? 'nav__a--active' : ''}}">Store Operations</a>
+                            </li>
+                        @endif
                     @endif
-                    @if(Auth::user()->role_id === $user_roles['admin'])
-                        <li class="nav__li">
-                            <a href="{{route('storeOperations')}}" class="nav__a {{Route::currentRouteName() == 'storeOperations' ? 'nav__a--active' : ''}}">Store Operations</a>
-                        </li>
-                    @endif
-                </ul>
+                   </ul>
             </nav>
         </div>
 

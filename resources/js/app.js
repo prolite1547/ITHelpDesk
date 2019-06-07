@@ -5,7 +5,7 @@
  * application frontend using useful Laravel and JavaScript libraries.
  */
 require('./bootstrap');
-window.Vue = require('vue');
+// window.Vue = require('vue');
 window.Dropzone = require('dropzone');
 window.moment = require('moment');
 require('select2/dist/js/select2');

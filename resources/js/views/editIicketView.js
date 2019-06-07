@@ -233,11 +233,14 @@ export const showExtndMdl = (ticket_id,e) => {
 };
 
 export const showSelects = (e) => {
+
     const selectElement = e.target;
 
     if(selectElement.value){
+        /*get option group name*/
         const option_group = selectElement.options[selectElement.selectedIndex].parentElement.getAttribute('label');
 
+        /*generate selects to be show depend on the option group name*/
         if(option_group === 'Both'){
             elements.selectPID.classList.remove('u-display-n');
             elements.selectTel.classList.remove('u-display-n');

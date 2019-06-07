@@ -140,7 +140,7 @@ class TicketController extends Controller
 
         $ticket = Ticket::findOrFail($id);
 
-        if ($ticket->logged_by === Auth::id()) {
+        if ($ticket->logged_by == Auth::id()) {
             return view('ticket.incomplete', compact('ticket'));
         } else {
             return redirect()->back();
@@ -267,13 +267,12 @@ class TicketController extends Controller
     {
         /*FETCH THE EXPIRATION HOURS COLUMN*/
         $expiration_hours = CategoryB::findOrFail($request->catB)->getExpiration->expiration;
-        $catA = CategoryB::findOrFail($request->catB)->group->id;
 
         /*GENERATE TE EXPIRATION DATE*/
         $expiration_date = Carbon::now()->addHours($expiration_hours);
 
         /*ADD EXPIRATION IN REQUEST ARRAY*/
-        $request->request->add(array('expiration' => $expiration_date, 'catA' => $catA));
+        $request->request->add(array('expiration' => $expiration_date));
 
         /*ID OF THE TICKET AND INCIDENT THAT THE DETAILS WILL BE INSERTED TO*/
         $ticket_id = $request->ticket_id;
@@ -465,7 +464,7 @@ class TicketController extends Controller
     public function addConnectionIssue(Request $request)
     {
         $validation = [
-            'to' => 'required|string',
+            'to' => 'required',
             'subject' => 'required|string|min:5',
             'cc' => 'string|nullable',
             'details' => 'required|string|min:5',
@@ -475,6 +474,29 @@ class TicketController extends Controller
         ];
         $voice = ['tel' => 'required|string|min:5'];
         $data = ['pid' => 'required|string|min:5'];
+
+        $to = array();
+        $group = array();
+
+        /*split ang grouped emails and individual emails*/
+        foreach ($request->to as $mail){
+            (str_contains($mail,'group')) ? array_push($group,$mail) : array_push($to,$mail);
+        }
+
+        /*iterate grouped emails and get emails and check if present already on the individual emails*/
+        foreach ($group as $email_group){
+          [$group,$id] = explode("_",$email_group);
+          $emails = \App\EmailGroup::find($id)->emails;
+            /*check if present already on the individual emails*/
+            foreach ($emails as $mail){
+                $cur_mail = $mail->email;
+                /*append to indivial emails*/
+                if (!in_array($cur_mail,$to)) array_push($to,$cur_mail);
+            }
+        }
+        
+        /*change value of to in the request*/
+        $request->request->add(['to' => implode(',',$to)]);
 
         $catC = $request->concern;
         /*GET CATEGORY B id*/

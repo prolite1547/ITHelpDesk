@@ -6,7 +6,7 @@
     <main>
         <div class="plusToggleContainer">
             <div class="form-contactAdd">
-                <button class="form-contactAdd__button u-margin-l " type="button"><i
+                <button class="plusToggleContainer__button u-margin-l " type="button"><i
                         class="fas fa-plus"></i> Add Contact Number
                 </button>
 
@@ -27,7 +27,7 @@
 
 
             <div class="form-sdcHieratchyAdd">
-                <button class="form-branchAdd__button u-margin-l " type="button"><i class="fas fa-plus"></i>
+                <button class="plusToggleContainer__button u-margin-l " type="button"><i class="fas fa-plus"></i>
                     Add SDC Hierarchy
                 </button>
 
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="form-categoriesAdd">
-                <button class="form-contactAdd__button u-margin-l" type="button"><i
+                <button class="plusToggleContainer__button u-margin-l" type="button"><i
                         class="fas fa-plus"></i> Add Categories
                 </button>
                 <div class="form-categoriesAdd__content-box u-display-n">
@@ -66,6 +66,56 @@
                     </div>
                     <div class="form__group">
                         {!! Form::text('new_category',null,['class' => 'form__input','placeholder' => 'Enter New Category','required']) !!}
+                    </div>
+                    {!! Form::button('Add',['type' => 'submit','class'=>'btn','data-action' => 'addCategory']) !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
+            <div class="form-emailGroupAdd">
+                <button class="plusToggleContainer__button u-margin-l " type="button"><i
+                        class="fas fa-plus"></i> Add Emails To Groups
+                </button>
+                <div class="form-emailGroupAdd__content-box u-display-n">
+                    {!! Form::open(['method' => 'POST','class' => 'form','id' => 'addEmailToGroup']) !!}
+                    <div class="form__group form-emailGroupAdd__parent">
+                        {!! Form::select('email_group_id',$email_groups_select ,null, ['placeholder' => '(Choose group..)','class' => 'form__input form__input--select2','data-select' => 'emailGroup','id' => 'emailGroupSelect','required']) !!}
+                    </div>
+                    <div class="form__group">
+                    <table class="form-emailGroupAdd__email-table">
+                    </table>
+                    </div>
+                    <div class="form__group">
+                        {!! Form::label('email[]','E-mails to be added:',['class' => 'form__label']) !!}
+                        {{Form::select('email[]',$emailSelect,null,array('class'=> 'form__input form__input--select2','required','multiple','id' => 'email2Add2Group'))}}
+                    </div>
+                    {!! Form::button('Add',['type' => 'submit','class'=>'btn','data-action' => 'addCategory']) !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
+
+            <div class="form-emailAdd">
+                <button class="plusToggleContainer__button u-margin-l " type="button"><i
+                        class="fas fa-plus"></i> Add Emails
+                </button>
+                <div class="form-emailAdd__content-box u-display-n">
+                    {!! Form::open(['method' => 'POST','class' => 'form','id' => 'addEmail']) !!}
+                    <div class="form__group">
+                        {{Form::email('email',null,array('placeholder' => 'Enter mail','class' => 'form__input','required'))}}
+                        {{Form::select('user_id',$usersSelect,null,array('class'=> 'form__input form__input--select2','placeholder' => 'Select User (optional)','id' => 'emailAdd'))}}
+                    </div>
+                    {!! Form::button('Add',['type' => 'submit','class'=>'btn','data-action' => 'addCategory']) !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
+
+            <div class="form-emailGroupsAdd">
+                <button class="plusToggleContainer__button u-margin-l " type="button"><i
+                        class="fas fa-plus"></i> Add Email Group
+                </button>
+                <div class="form-emailGroupsAdd__content-box u-display-n">
+                    {!! Form::open(['method' => 'POST','class' => 'form','id' => 'addEmailGroup']) !!}
+                    <div class="form__group">
+                        {{Form::text('group_name',null,array('placeholder' => 'Enter email group','class' => 'form__input','required'))}}
                     </div>
                     {!! Form::button('Add',['type' => 'submit','class'=>'btn','data-action' => 'addCategory']) !!}
                     {!! Form::close() !!}

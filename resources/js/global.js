@@ -140,3 +140,26 @@ function responseHandler(data){
             alert('response not found!');
     }
 }
+
+export const categoryADynamicCategoryBSelect = () => {
+    elements.categoryASelect.on('change',(e) => {
+        const catAID = $(e.target).val();
+
+        elements.categoryBSelect.empty().trigger('change');
+        elements.categoryBSelect.select2({
+            placeholder : '(select sub-B)'
+        });
+        elements.categoryBSelect.select2('data', null);
+        $.ajax(`/categoryA/${catAID}/subBCategories`,{
+            type: 'GET'
+        }).done(subBArray => {
+            for(const subB of subBArray) {
+                // Create a DOM Option and pre-select by default
+                // Append it to the select
+                elements.categoryBSelect.append(new Option(subB.name, subB.id)).trigger('change');
+            }
+        }).fail(() => {
+            alert('failed to get sub B categories!!');
+        });
+    });
+};

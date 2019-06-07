@@ -9,6 +9,7 @@ import * as glboalScript from './global';
 import {renderLoader, clearLoader, showModal, insertToModal, hideModal} from "./views/base";
 import ConnectionIssueReply from "./models/ConnectionIssueReply";
 import {disableSubmitBtn} from "./global";
+import {categoryADynamicCategoryBSelect} from "./global";
 
 
 ////////////////////////////////
@@ -16,6 +17,13 @@ import {disableSubmitBtn} from "./global";
 ////*ADD TICKET CONTROLLER*/////
 ////////////////////////////////
 ////////////////////////////////
+
+const emailSelect2Options = {
+    placeholder: "To",
+    width: '100%',
+    tags: true,
+    tokenSeparators: [',', ' ']
+};
 
 export const ticketAddController = () => {
     /*INITIALIZE*/
@@ -27,6 +35,12 @@ export const ticketAddController = () => {
         /*DISPLAY THE FORM*/
         addTicketView.displayForm();
     })();
+
+    categoryADynamicCategoryBSelect();
+
+    $('#emailTo').select2(emailSelect2Options);
+
+    $('#emailCc').select2(emailSelect2Options);
 
     $('#callerBranchSelect,.branchSelect').select2(branchSelect2);
     $('#ticketPositionSelect').select2(psitionSelect2);
@@ -129,7 +143,7 @@ export const ticketViewController = () => {
     ticket.fetchOriginalData()
         .done(data => {
             /*TICKET STATUS IS EQUAL TO FIX(4)*/
-            if (data.status === 4 || data.status === 3) {
+            if (data.status == 4 || data.status == 3) {
                 document.querySelector('button[data-action=viewFixDtls').addEventListener('click', editTicketView.getModalWithData.bind(null, data));
             } else {
 

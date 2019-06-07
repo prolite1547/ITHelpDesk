@@ -197,8 +197,13 @@ export const filterFunction = () => {
             let inputs = $(e.target).serializeArray();
 
             inputs.forEach((currentValue) => {
-                table.column(currentValue['name']).search(currentValue['value']).draw();
+                table.column(currentValue['name']).search(currentValue['value'],true).draw();
             });
         }
     });
 };
+    export const myElements = {
+        radios :  document.querySelectorAll('.form-ticketFilter__radio'),
+        userLabel:  document.querySelector('.form-ticketFilter__label--user'),
+        userSelectInput: document.querySelector('.form-ticketFilter__input--user')
+    };

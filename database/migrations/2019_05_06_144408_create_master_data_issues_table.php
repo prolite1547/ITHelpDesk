@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoreVisitDetailsTable extends Migration
+class CreateMasterDataIssuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateStoreVisitDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_visit_details', function (Blueprint $table) {
+        Schema::create('master_data_issues', function (Blueprint $table) {
             $table->increments('id');
-            $table->mediumInteger('store_id');
-            $table->smallInteger('it_personnel');
-            $table->tinyInteger('status_id');
+            $table->text('issue_name');
+            $table->text('status');
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->smallInteger('logged_by');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateStoreVisitDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_visit_details');
+        Schema::dropIfExists('master_data_issues');
     }
 }

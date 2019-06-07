@@ -6,7 +6,9 @@ import {adminPageController} from  "./AdminPageController";
 import {maintenancePageController} from "./maintenancePageController";
 import {treasuryDashboardController} from "./treasury/index";
 import {devProjsController} from "./devprojs/datatable";
+import {MasterDataController} from "./masterdata/datatable";
 import {storeVisitController} from "./storeVisit/index";
+import {incompletePageController} from "./incompletePage/index.js";
 import User from './models/User';
 import * as Global from './global';
 
@@ -27,6 +29,8 @@ if(elements.select2elements){
     elements.select2elements.select2();
 }
 
+
+
 elements.popupClose.addEventListener('click',() => {
     hideModal();
 });
@@ -40,8 +44,9 @@ elements.popupClose.addEventListener('click',() => {
     const treasuryDashboard_route  = new RegExp("\/treasury/dashboard",'gm');
     const devprojs_route = new RegExp("\/show/devprojects",'gm');
     const storeVisit_route = new RegExp("\/technical/store-visit",'gm');
+    const mdis_route =  new RegExp("\/show/mds",'gm'); 
+    const incompleteTixRoute =  new RegExp("\/ticket/incomplete/\\d+",'gm');
     const pathName = window.location.pathname;
-
     switch (true){
         case ticketView_route.test(pathName):
             const user = new User();
@@ -69,8 +74,14 @@ elements.popupClose.addEventListener('click',() => {
         case devprojs_route.test(pathName):
             devProjsController();
         break;
+        case mdis_route.test(pathName):
+            MasterDataController();
+        break;
         case storeVisit_route.test(pathName):
             storeVisitController();
+            break;
+        case incompleteTixRoute.test(pathName):
+            incompletePageController();
             break;
         default:
             console.log('route not set');

@@ -26,7 +26,6 @@ class CreateIncidentTable extends Migration
             $table->foreign('catA')->references('id')->on('category_a')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('catB')->references('id')->on('category_b')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('catC')->references('id')->on('category_c')->onDelete('cascade')->onUpdate('cascade');
-//            $table->foreign('catC')->references('id')->on('category_c')->onDelete('cascade');
             $table->timestamps();
         });
     }

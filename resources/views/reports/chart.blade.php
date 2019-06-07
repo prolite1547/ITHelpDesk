@@ -3,7 +3,7 @@
      
               <div class="container" style="margin-top:100px;margin-bottom:10px;">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="panel panel-primary panel-colorful">
                             <div class="pad-all text-center">
                             <span class="text-3x text-thin">{{ $downCounts }}/{{  $pendingDays  }}</span>
@@ -13,7 +13,7 @@
                         </div>
                     </div>
                    
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="panel panel-dark panel-colorful">
                             <div class="pad-all text-center">
                             <span class="text-3x text-thin">{{ $ssCountRes }}/{{ $ssCountLog }}</span>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="panel panel-primary panel-colorful">
                             <div class="pad-all text-center">
                             <span class="text-3x text-thin">{{ $dcsCountRes }}/{{ $dcsCountLog }}</span>
@@ -33,10 +33,7 @@
                         </div>
                     </div>
 
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="panel panel-dark panel-colorful">
                             <div class="pad-all text-center">
                             <span class="text-3x text-thin">{{ $sscCountRes }}/{{$sscCountLog }}</span>
@@ -45,6 +42,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
+                   
 
                     <div class="col-md-4">
                         <div class="panel panel-primary panel-colorful">
@@ -59,8 +60,18 @@
                     <div class="col-md-4">
                         <div class="panel panel-dark panel-colorful">
                             <div class="pad-all text-center">
-                            <span class="text-3x text-thin">0/0</span>
+                            <span class="text-3x text-thin">{{ $visitDoneCount }}/{{  $visitCount  }}</span>
                                 <p>Technical Visits</p>
+                                <i class="demo-pli-shopping-bag icon-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="panel panel-primary panel-colorful">
+                            <div class="pad-all text-center">
+                            <span class="text-3x text-thin">{{ $issueDoneCount }}/{{ $issueCount }}</span>
+                                <p>Master Data Services</p>
                                 <i class="demo-pli-shopping-bag icon-lg"></i>
                             </div>
                         </div>

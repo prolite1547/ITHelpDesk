@@ -30,3 +30,6 @@ function generateForm(text,parent = false,newCat = false,btn = false) {
 
     $('#categoriesSelect').select2(text === 'A' ? catASelect2 : catBSelect2);
 }
+
+
+

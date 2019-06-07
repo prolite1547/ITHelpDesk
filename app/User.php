@@ -75,7 +75,7 @@ class User extends Authenticatable
         if (is_null($middle_name) || $middle_name === '') {
             return ucfirst($this->fName) . ' ' . ucfirst($this->lName);
         } else {
-            return ucfirst($this->fName) . ' ' . $middle_name[0] . '.' . ' ' . ucfirst($this->lName);
+            return ucfirst($this->fName) . ' ' . $middle_name . ' ' . ucfirst($this->lName);
         }
     }
 

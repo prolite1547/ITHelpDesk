@@ -8,37 +8,43 @@
       <div class="row">
           
 
-          <div class="col-2-of-3">
+          <div class="col-3-of-4">
                         <div class="window" style="width:100%;margin-bottom:10px;">
                                         <div class="window__title-box">
                                             <h3 class="heading-tertiary">Presentation</h3>
                                         </div>
                                         <div class="window__content" style="display:block;text-align:center ;background:#2d3436;color:white;">
-                                                <div class="row" style="margin-bottom:5px;margin-left:10px;">
-                                                       <div class="col-1-of-4">
+                                                <div class="row" style="margin-bottom:5px;">
+                                                        <div class="col-1-of-6">
+                                                                <span style="font-size:12px;">OPEN</span>
+                                                        </div>
+                                                       <div class="col-1-of-6">
                                                                 <span style="font-size:12px;">ON-GOING</span>
                                                        </div>
-                                                       <div class="col-1-of-5">
+                                                       <div class="col-1-of-6">
                                                                 <span style="font-size:12px;">TESTING</span>
                                                        </div>
-                                                       <div class="col-1-of-5">
+                                                       <div class="col-1-of-6">
                                                                 <span style="font-size:12px;">DONE</span>
                                                        </div>
-                                                       <div class="col-1-of-5">
+                                                       <div class="col-1-of-6">
                                                                 <span style="font-size:12px;">NO. OF REPORTS</span>
                                                        </div>
                                                 </div>
-                                                <div class="row" style="margin-left:10px;">
-                                                        <div class="col-1-of-4">
+                                                <div class="row" style="">
+                                                        <div class="col-1-of-6">
+                                                                <span style="font-size:16px;font-weight: bold;">{{ $open }}</span>
+                                                        </div>
+                                                        <div class="col-1-of-6">
                                                                 <span style="font-size:16px;font-weight: bold;">{{ $onGoing }}</span>
                                                         </div>
-                                                        <div class="col-1-of-5">
+                                                        <div class="col-1-of-6">
                                                                 <span style="font-size:16px;font-weight: bold;">{{ $testing }}</span>
                                                         </div>
-                                                        <div class="col-1-of-5">
+                                                        <div class="col-1-of-6">
                                                                 <span style="font-size:16px;font-weight: bold;">{{ $done }}</span>
                                                         </div>     
-                                                        <div class="col-1-of-5">
+                                                        <div class="col-1-of-6">
                                                                 <span style="font-size:16px;font-weight: bold;">{{ $allProj }}</span>
                                                         </div>  
                                                 </div>
@@ -64,7 +70,7 @@
                        
                     </table>
           </div>
-          <div class="col-1-of-3">
+          <div class="col-1-of-4">
                        
         
                         <div class="window" style="width:100%">
@@ -86,7 +92,7 @@
                                                     </div>
                                                     <div class="form__group">
                                                             {!! Form::label('status','Status :',['class' => 'form__label'])!!}
-                                                            {!! Form::select('status', ['On-Going' => 'On-Going', 'Testing' => 'Testing','Done' => 'Done'], null, ['placeholder' => '(select status)','class' => 'form__input   ','required', 'style'=>'width:300px;']) !!}
+                                                            {!! Form::select('status', ['Open'=> 'Open','On-Going' => 'On-Going', 'Testing' => 'Testing','Done' => 'Done'], null, ['placeholder' => '(select status)','class' => 'form__input   ','required', 'style'=>'width:300px;']) !!}
                                                     </div>
                                                     <div class="form__group">
                                                             {!! Form::label('dateStart','Date Start :',['class' => 'form__label'])!!}
@@ -94,11 +100,7 @@
                                                     </div>
                                                     <div class="form__group">
                                                             {!! Form::label('dateEnd','Date End :',['class' => 'form__label'])!!}
-<<<<<<< HEAD
-                                                            {!! Form::date('dateEnd',null,['class' => 'form__input','placeholder' => ' ','required','minlength' => 2, 'style'=>'width:300px;']) !!}
-=======
                                                             {!! Form::date('dateEnd',null,['class' => 'form__input','placeholder' => ' ','minlength' => 2, 'style'=>'width:300px;']) !!}
->>>>>>> 1f25e3b70585c3de3741f2213d894d8186391944
                                                     </div>
                                                     <div class="form__group">
                                                             {!! Form::label('statusmd','MD50 Status :',['class' => 'form__label'])!!}
