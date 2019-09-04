@@ -107,7 +107,11 @@ class ViewServiceProvider extends ServiceProvider
             $email_groups_connection = $email_groups->pluck('group_name','temp')->toArray();
             $emailAndGroupSelect = array_merge($emailSelect_connection,$email_groups_connection);
             $branchSelect = Store::all()->pluck('store_name', 'id')->toArray();
-            $assigneeSelect = groupListSelectArray(Role::class, 'role', 'users', 'id', 'full_name');
+            $cons = array(
+                'column'=>'id',
+                'values'=> [3,4,5,6,7,8]
+            );
+            $assigneeSelect = groupListSelectArray(Role::class, 'role', 'users', 'id', 'full_name', $cons);
             $filterAssigneeSelect = groupListSelectArray(Role::class, 'role', 'users', 'full_name', 'full_name');
             $categoryASelect = CategoryA::pluck('name','id')->toArray();
             $usersSelect = User::all()->pluck('full_name','id')->toArray();

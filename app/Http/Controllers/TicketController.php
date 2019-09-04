@@ -14,6 +14,7 @@ use App\Incident;
 use App\Mail\PLDTIssue;
 use App\Ticket;
 use App\SystemDataCorrection;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -774,5 +775,17 @@ class TicketController extends Controller
             $fix->ticket->update(['status' => 3]);
             $fix->resolve()->create(['fixes_id' => $id,'resolved_by' => $request->user()->id]);
         });
+    }
+
+
+    public function usersGroup(Request $request){
+        if($request->assign != 'none'){
+            $id = $request->id;
+            $user = User::find($id);
+        }else{
+            $user = User::find(Auth::user()->id);
+        }
+       
+        return response()->json(array('success'=>true, 'id'=>$user->getGroupAttribute()));
     }
 }

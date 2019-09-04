@@ -3,7 +3,8 @@
 
     <ul class="ticket-details__list">
         <li class="ticket-details__item"><span class="ticket-details__field">Assigne to:</span>
-            {!! Form::select('assignee',$assigneeSelect, $ticket->assigneeRelation->id, ['placeholder' => '(assign to)','class' => 'ticket-details__select','required']) !!}
+            {!! Form::hidden('group', null, ['id'=>'group','class'=>'ticket-details__select']) !!}
+            {!! Form::select('assignee',$assigneeSelect, $ticket->assigneeRelation->id, ['placeholder' => '(assign to)','class' => 'ticket-details__select','required', 'id'=>'assigneeSelect']) !!}
         </li>
         @can('updateDetails',$ticket)
         <li class="ticket-details__item"><span class="ticket-details__field">Caller:</span>

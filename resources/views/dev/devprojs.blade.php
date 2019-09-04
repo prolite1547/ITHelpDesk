@@ -62,6 +62,7 @@
                         <th class="table__th">Date Start</th>
                         <th class="table__th">Date End</th>
                         <th class="table__th">MD50 Status</th>
+                        <th class="table__th">Remarks</th>
                         <th class="table__th">Actions</th>
                         </thead>
                         <tbody class="table__tbody">
@@ -104,7 +105,12 @@
                                                     </div>
                                                     <div class="form__group">
                                                             {!! Form::label('statusmd','MD50 Status :',['class' => 'form__label'])!!}
-                                                            {!! Form::text('statusmd',null,['class' => 'form__input','placeholder' => ' ','required','minlength' => 2, 'style'=>'width:300px;']) !!}
+                                                            {!! Form::select('statusmd', ['Done' => 'Done'], null, ['placeholder' => '(select status)','class' => 'form__input   ','required', 'style'=>'width:300px;']) !!}
+                                                            {{--  {!! Form::text('statusmd',null,['class' => 'form__input','placeholder' => ' ','required','minlength' => 2, 'style'=>'width:300px;']) !!}  --}}
+                                                    </div>
+                                                    <div class="form__group">
+                                                        {!! Form::label('remarks','Remarks :',['class' => 'form__label'])!!}
+                                                        {!! Form::textarea('remarks',null,['class' => 'form__input','placeholder' => ' ','minlength' => 2, 'style'=>'width:300px;']) !!}
                                                     </div>
                                                     
                                                     {!! Form::button('Add Project',['type' => 'submit','class'=>'btn','data-action' => 'addProject']) !!}

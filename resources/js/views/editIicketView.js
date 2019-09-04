@@ -8,6 +8,56 @@ import {
 
 import {exprtionSelect2} from '../select2';
 
+export const getAutoGroup = () => {
+    var group = $('#group');
+    var assignSelect = $('#assigneeSelect');
+
+    if(assignSelect.val() != ''){
+        var id = assignSelect.val();
+        var assign = 'assigned';
+    }else{
+        var id =  '';
+        var assign = 'none';
+    }
+    
+    $.ajax('/get/group', {
+        type: 'POST',
+        data:  {
+            'assign' : assign,
+            'id' : id
+        }
+    })
+    .done((data) => {
+        group.val(data.id);
+    })
+    .fail(() => {
+        console.log("failed to get user group")
+    });
+    
+    
+    assignSelect.on('change',function(){
+        var id = $(this).val();
+        var assign = 'assigned';
+        if(id == ''){
+            assign = 'none';
+        }
+    
+        $.ajax('/get/group', {
+            type: 'POST',
+            data:  {
+                'assign' : assign,
+                'id' : id
+            }
+        })
+        .done((data) => {
+            group.val(data.id);
+        })
+        .fail(() => {
+            console.log("failed to get user group")
+        });
+    
+    });
+}
 export const makeElementsEditable = () => {
 
     elements.ticketDetails.contentEditable = "true";

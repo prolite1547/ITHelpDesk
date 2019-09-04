@@ -77,6 +77,42 @@
                         </div>
                     </div>
                 </div>
+               
+                
+             
+              
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-dark panel-colorful">
+                            <div class="pad-all text-center">
+                            <span class="text-3x text-thin">{{ $totalSRCount }}/{{ $totalSCount }}</span>
+                                <p>Support</p>
+                                <i class="demo-pli-shopping-bag icon-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="panel panel-primary panel-colorful">
+                            <div class="pad-all text-center">
+                            <span class="text-3x text-thin">{{ $totalTRCount }}/{{ $totalTCount }}</span>
+                                <p>Technical</p>
+                                <i class="demo-pli-shopping-bag icon-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                            <div class="panel panel-dark panel-colorful">
+                                    <div class="pad-all text-center">
+                                    <span class="text-3x text-thin">{{ $totalMDataResCount }}/{{ $totalMDataCount }}</span>
+                                        <p>Master Data</p>
+                                        <i class="demo-pli-shopping-bag icon-lg"></i>
+                                    </div>
+                                </div>
+                        
+                    </div>
+                </div>
                 <hr>
                   {{-- MONTHLY LOGGED VS. RESOLVED --}}
                     <div class="logggedvsresolved" >

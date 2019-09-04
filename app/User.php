@@ -82,7 +82,7 @@ class User extends Authenticatable
     public function getGroupAttribute()
     {
         if (strtolower($this->role->role) === 'admin') {
-            return false;
+            return 1;
         } else {
             switch (true) {
                 case strpos(strtolower($this->position->position), 'support') !== false:

@@ -20,6 +20,7 @@ class CreateDevProjectsTable extends Migration
             $table->text('status');
             $table->text('date_start')->nullable();
             $table->text('date_end')->nullable();
+            $table->text('remarks')->nullable();
             $table->text('md50_status');
             $table->softDeletes();
             $table->timestamps();

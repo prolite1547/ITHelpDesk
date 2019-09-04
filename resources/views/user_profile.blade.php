@@ -7,7 +7,7 @@
             <div class="col-1-of-4">
                 <div class="user">
                     <div class="user__img-box">
-                        <img src="{{asset("storage/profpic/".$user->profpic->image."")}}" alt="" class="user__img">
+                        <img  src="{{asset("storage/profpic/".$user->profpic->image."")}}" alt="" class="user__img">
                         @if(Auth::id() === $user->id)
                         <div class="user__edit">
                             <label>
@@ -20,7 +20,8 @@
                 </div>
             </div>
             <div class="col-3-of-4">
-                    <h2 class="heading-secondary">{{$user->name}}</h2>
+                    <h2 class="heading-secondary">{{$user->getFullNameAttribute()}}</h2>
+                    <p>{{ $user->position->position }}</p>
             </div>
         </div>
     </main>

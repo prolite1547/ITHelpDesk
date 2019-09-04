@@ -36,6 +36,11 @@
                                     {!! Form::label('statusmd','MD50 Status :',['class' => 'form__label'])!!}
                                     {!! Form::text('statusmd',$project->md50_status,['class' => 'form__input','placeholder' => ' ','required','minlength' => 2, 'style'=>'width:300px;']) !!}
                             </div>
+
+                            <div class="form__group">
+                                {!! Form::label('remarks','Remarks :',['class' => 'form__label'])!!}
+                                {!! Form::textarea('remarks',$project->remarks,['class' => 'form__input','placeholder' => ' ','minlength' => 2, 'style'=>'width:300px;']) !!}
+                            </div>
                             
                             {!! Form::button('Save Changes',['type' => 'submit','class'=>'btn btn--blue','data-action' => 'saveChanges']) !!}
                             {!! Form::close() !!}

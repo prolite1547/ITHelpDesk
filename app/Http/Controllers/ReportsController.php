@@ -322,12 +322,15 @@ public function loadChart(){
     $visitDoneCount = 0;
     $issueCount = 0;
     $issueDoneCount = 0;
+
+
+
     // $month = '5';
     // $mm = 5;
 
     $incidents = Incident::whereHas('ticket', function($query){
         $query->whereNull('deleted_at');
-    })->whereMonth('created_at',  $month)->where('category', 3)->get();
+    })->whereMonth('created_at',  $month)->whereYear('created_at',$yy)->where('category', 3)->get();
 
     foreach($incidents as $i){
             
@@ -370,17 +373,29 @@ public function loadChart(){
     }
 
       $categories = CategoryA::all();
-      $tickets = Ticket::whereMonth('created_at','=', $month)->where('issue_type','=','App\Incident')->get();
+      $tickets = Ticket::whereMonth('created_at','=', $month)->where('issue_type','=','App\Incident')->whereNull('deleted_at')->whereYear('created_at',$yy)->get();
+  
       $ssCountLog = 0;
       $ssCountRes = 0;
       $dcsCountLog = 0;
       $dcsCountRes = 0;
       $sscCountLog = 0;
       $sscCountRes = 0;
+
+      
+    $totalSupportTicketCount = 0;
+    $totalSupportTicketResolvedCount = 0;
+    $totalMDataTicketCount = 0;
+  
+
+
+    $totalTechTicketCount = 0;
+    $totalTechTicketResolvedCount = 0;
+    $totalMDataTicketResolvedCount = 0;
       
       foreach($tickets as $ticket){
             $store_name = $ticket->store->store_name;
-            if(strpos($store_name, 'Distribution Center') !== false){
+            if(strpos($store_name, 'Distribution Center') != false){
                 if(isset($ticket->status)){
                     if($ticket->status == 3){
                         $dcsCountRes  += 1;
@@ -402,6 +417,26 @@ public function loadChart(){
                 }
                 $ssCountLog +=1;
 
+            }
+
+
+            if($ticket->group == 1){
+                if($ticket->status == 3){
+                    $totalSupportTicketResolvedCount  += 1;
+                }
+                $totalSupportTicketCount +=1;
+            }elseif($ticket->group == 2){
+                if($ticket->status == 3){
+                    $totalTechTicketResolvedCount  += 1;
+                }
+                $totalTechTicketCount +=1;
+            }elseif($ticket->group == 3){
+                if($ticket->status == 3){
+                    $totalMDataTicketResolvedCount +=1;
+                  
+                } 
+                $totalMDataTicketCount  += 1;
+                
             }
       }
 
@@ -441,7 +476,14 @@ public function loadChart(){
       'visitCount'=>$visitCount,
       'visitDoneCount'=>$visitDoneCount,
       'issueCount'=>$issueCount,
-      'issueDoneCount'=>$issueDoneCount
+      'issueDoneCount'=>$issueDoneCount,
+
+      'totalSCount' =>$totalSupportTicketCount,
+      'totalSRCount' =>$totalSupportTicketResolvedCount,
+      'totalTCount' =>$totalTechTicketCount,
+      'totalTRCount' =>$totalTechTicketResolvedCount,
+      'totalMDataCount' =>$totalMDataTicketCount,
+      'totalMDataResCount'=>$totalMDataTicketResolvedCount
       ]);
     }
 

@@ -49,9 +49,9 @@
 }
 
 .dataTables_processing {
-
-    position: absolute;
-    @include  absCenter;
+    
+    // position: absolute;
+    // @include  absCenter;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
